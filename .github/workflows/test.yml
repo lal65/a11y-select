@@ -1,0 +1,20 @@
+name: 'Test'
+on:
+  push:
+    branches:
+      - '**'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install chrome
+        uses: browser-actions/setup-chrome@f657ed6f2be4bd6a9b51278992ea1f0efeb75b5d
+      - name: Checkout code
+        uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
+      - name: Configure NodeJS
+        uses:
+          actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+      - name: Install dependencies
+        run: npm ci
+      - name: Execute tests
+        run: npm test
