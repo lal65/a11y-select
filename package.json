@@ -1,0 +1,16 @@
+{
+  "name": "a11y-select",
+  "version": "0.0.1",
+  "description": "A modern, accessible, and simple implementation of a themable select-only combobox.",
+  "scripts": {
+    "test": "mocha",
+    "build": "node build.js"
+  },
+  "devDependencies": {
+    "clean-css": "^5.3.3",
+    "http-server": "^14.1.1",
+    "mocha": "^11.5.0",
+    "selenium-webdriver": "^4.33.0",
+    "uglify-js": "^3.19.3"
+  }
+}
