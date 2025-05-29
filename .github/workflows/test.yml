@@ -35,14 +35,12 @@ jobs:
         run: sudo chgrp www-data /home/$USER
       - name: Restart apache
         run: sudo service apache2 restart
-      - name: Debug
-        run: ls -lah ${{ github.workspace }}/test && curl http://bs-local.com/test/simple.html
-#      - name: Configure NodeJS
-#        uses:
-#          actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
-#      - name: Install dependencies
-#        run: npm ci
-#      - name: Build assets
-#        run: npm run build
-#      - name: Execute tests
-#        run: npm run test-browserstack
+      - name: Configure NodeJS
+        uses:
+          actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+      - name: Install dependencies
+        run: npm ci
+      - name: Build assets
+        run: npm run build
+      - name: Execute tests
+        run: npm run test-browserstack
