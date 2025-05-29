@@ -470,6 +470,62 @@ describe('Simple Tests', () => {
 
 });
 
+describe('Search tests', () => {
+  let driver;
+
+  before(async () => {
+    driver = await new Builder().withCapabilities({
+      'goog:loggingPrefs': { browser: 'ALL' },
+    }).forBrowser(Browser.CHROME).build();
+  })
+
+  after(async () => {
+    await driver.quit();
+  });
+
+  it('Should expand the combobox even if there are no matches', async () => {
+    await driver.get(`http://bs-local.com/test/search.html`);
+    const a11y_select = await driver.findElement(By.css('.a11y-select'));
+    await driver.wait(until.elementIsVisible(a11y_select), 1000);
+
+    const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
+    await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
+    combobox.sendKeys('z');
+    const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
+    await driver.wait(until.elementIsVisible(listbox), 2000);
+    assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
+    assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), 'a11y-select-search-demo--option-1');
+  });
+
+  it('Should move the active descendant to the first search term that matches', async () => {
+    await driver.get(`http://bs-local.com/test/search.html`);
+    const a11y_select = await driver.findElement(By.css('.a11y-select'));
+    await driver.wait(until.elementIsVisible(a11y_select), 1000);
+
+    const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
+    await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
+    combobox.sendKeys('a');
+    const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
+    await driver.wait(until.elementIsVisible(listbox), 2000);
+    assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
+    assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), 'a11y-select-search-demo--option-2');
+  });
+
+  it('Should move the active descendant to the most relevant search term that matches', async () => {
+    await driver.get(`http://bs-local.com/test/search.html`);
+    const a11y_select = await driver.findElement(By.css('.a11y-select'));
+    await driver.wait(until.elementIsVisible(a11y_select), 1000);
+
+    const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
+    await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
+    combobox.sendKeys('peac');
+    const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
+    await driver.wait(until.elementIsVisible(listbox), 2000);
+    assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
+    assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), 'a11y-select-search-demo--option-15');
+  });
+});
+
 describe('Optgroup Tests', () => {
   let driver;
 
