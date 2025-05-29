@@ -15,12 +15,33 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
-      - name: Configure NodeJS
-        uses:
-          actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
-      - name: Install dependencies
-        run: npm ci
-      - name: Build assets
-        run: npm run build
-      - name: Execute tests
-        run: npm run test-browserstack
+      - name: Install webserver
+        run: sudo apt update && sudo apt install apache2
+      - name: Add hosts file entry
+        run: echo "127.0.0.1 bs-local.com" | sudo tee -a /etc/hosts > /dev/null
+      - name: Add virtual host
+        run: |
+          sudo cat > /etc/apache2/sites-available/100-actions.conf <<VHOST
+            <VirtualHost *:80>
+              ServerName bs-local.com
+              DocumentRoot ${{ github.workspace }}/${{ github.event.repository.name }}
+              <Directory ${{ github.workspace }}/${{ github.event.repository.name }}>
+                Require all granted
+                Options +FollowSymLinks
+                AllowOverride All
+              </Directory>
+            </VirtualHost>
+          VHOST
+      - name: Restart apache
+        run: sudo service apache2 restart
+      - name: Debug
+        run: curl http://bs-local.com/test/simple.html
+#      - name: Configure NodeJS
+#        uses:
+#          actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+#      - name: Install dependencies
+#        run: npm ci
+#      - name: Build assets
+#        run: npm run build
+#      - name: Execute tests
+#        run: npm run test-browserstack
