@@ -463,7 +463,8 @@ describe('Simple Tests', () => {
     assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), 'a11y-select-demo--option-2');
 
     await driver.findElement(By.css('#a11y-select-demo--option-3')).click();
-    const selected_option = await driver.findElement(By.css('option[selected]'));
+    const native_select = await driver.findElement(By.css('select'));
+    const selected_option = await driver.findElement(By.css('option[value="' + await native_select.getAttribute('value') + '"]'));
     assert.strictEqual(await selected_option.getAttribute("textContent"), 'Option 2');
   });
 
