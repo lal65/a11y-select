@@ -43,6 +43,10 @@ export const a11ySelect = (native_select, unique_id) => {
     console.error('Skipping a11y-select progressive enhancement due to unsupported "multiple" attribute.');
     return;
   }
+  if (native_select.hasAttribute('disabled')) {
+    console.error('Skipping a11y-select progressive enhancement due to unsupported "disabled" attribute.');
+    return;
+  }
 
   // Next up, some run-time education...
 
@@ -57,7 +61,7 @@ export const a11ySelect = (native_select, unique_id) => {
 
   // The disabled options may result in poor accessibility.
   if (native_select.querySelector('[disabled]')) {
-    console.warn('One or more disabled options were found. Disabled options will not be transformed.  Consider adjusting the options to not include disabled ones.');
+    console.warn('One or more disabled options were found. Disabled options will not be transformed. Consider adjusting the options to not include disabled ones.');
   }
 
   // If we got this far, it should be smooth sailing.

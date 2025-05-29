@@ -1,5 +1,78 @@
-const { Builder, Browser, By, Key } = require('selenium-webdriver');
+const { Builder, Browser, By, Key, until } = require('selenium-webdriver');
 const assert = require('assert');
+
+describe('Preflight checks', () => {
+  let driver;
+
+  before(async () => {
+    driver = await new Builder().withCapabilities({
+      'goog:loggingPrefs': { browser: 'ALL' },
+    }).forBrowser(Browser.CHROME).build();
+    await driver.manage().setTimeouts({ implicit: 5000 });
+  })
+
+  after(async () => {
+    await driver.quit();
+  });
+
+  it('Will not generate duplicate HTML IDs', async () => {
+    await driver.get(`http://bs-local.com/test/preflight-invalid-duplicate-ids.html`);
+    await driver.sleep(1000);
+    const errors = await driver.executeScript('return window.console.errors');
+    assert.strictEqual(errors.length, 1);
+    assert.strictEqual(errors[0], 'The a11y-select progressive enhancement was not applied due to an ID collision ("demo"). Ensure that all calls to a11ySelect use a distinct "unique_id" parameter.');
+  });
+
+  xit('Will not attempt to progressively enhance on unsupported user-agents', async () => {
+    // @TODO: Implement test.
+  });
+
+  it('Will not attempt to progressively enhance select elements that allow multiple selections', async () => {
+    await driver.get(`http://bs-local.com/test/preflight-invalid-multiple-attribute.html`);
+    await driver.sleep(1000);
+    const errors = await driver.executeScript('return window.console.errors');
+    assert.strictEqual(errors.length, 1);
+    assert.strictEqual(errors[0], 'Skipping a11y-select progressive enhancement due to unsupported "multiple" attribute.');
+
+  });
+
+  it('Will not attempt to progressively enhance missing elements', async () => {
+    await driver.get(`http://bs-local.com/test/preflight-invalid-missing-element.html`);
+    await driver.sleep(1000);
+    const errors = await driver.executeScript('return window.console.errors');
+    assert.strictEqual(errors.length, 1);
+    assert.strictEqual(errors[0], 'Skipping a11y-select progressive enhancement for "demo" due to incorrect element type.');
+  });
+
+  it('Will not attempt to progressively enhance invalid element types', async () => {
+    await driver.get(`http://bs-local.com/test/preflight-invalid-element-type.html`);
+    await driver.sleep(1000);
+    const errors = await driver.executeScript('return window.console.errors');
+    assert.strictEqual(errors.length, 1);
+    assert.strictEqual(errors[0], 'Skipping a11y-select progressive enhancement for "demo" due to incorrect element type.');
+  });
+
+  it('Will not attempt to progressively enhanced disable select elements', async () => {
+    await driver.get(`http://bs-local.com/test/preflight-invalid-disabled-attribute.html`);
+    await driver.sleep(1000);
+    const errors = await driver.executeScript('return window.console.errors');
+    assert.strictEqual(errors.length, 1);
+    assert.strictEqual(errors[0], 'Skipping a11y-select progressive enhancement due to unsupported "disabled" attribute.');
+  });
+
+  xit('Will warn about the use of option groups on macOS', async () => {
+    // @TODO: Implement test.
+  });
+
+  it('Will warn about disabled options', async () => {
+    await driver.get(`http://bs-local.com/test/preflight-warning-disabled-elements.html`);
+    await driver.sleep(1000);
+    const warnings = await driver.executeScript('return window.console.warnings');
+    assert.strictEqual(warnings.length, 1);
+    assert.strictEqual(warnings[0], 'One or more disabled options were found. Disabled options will not be transformed. Consider adjusting the options to not include disabled ones.');
+  });
+
+});
 
 describe('Simple Tests', () => {
   let driver;
@@ -15,57 +88,10 @@ describe('Simple Tests', () => {
     await driver.quit();
   });
 
-  it('Will not generate duplicate HTML IDs', async () => {
-    await driver.get(`http://bs-local.com/test/invalid-duplicate-ids.html`);
-    await driver.sleep(2000);
-    const logs = await driver.manage().logs().get('browser');
-    assert.strictEqual(logs.length, 1);
-    assert.match(logs[0].message, /.*The a11y-select progressive enhancement was not applied due to an ID collision \(\\"demo\\"\). Ensure that all calls to a11ySelect use a distinct \\"unique_id\\" parameter\..*/);
-  });
-
-  xit('Will not attempt to progressively enhance on unsupported user-agents', async () => {
-    // @TODO: Implement test.
-  });
-
-  it('Will not attempt to progressively enhance select elements that allow multiple selections', async () => {
-    await driver.get(`http://bs-local.com/test/invalid-multiple-attribute.html`);
-    await driver.sleep(2000);
-    const logs = await driver.manage().logs().get('browser');
-    assert.strictEqual(logs.length, 1);
-    assert.match(logs[0].message, /.*Skipping a11y-select progressive enhancement due to unsupported \\"multiple\\" attribute\..*/);
-
-  });
-
-  it('Will not attempt to progressively enhance missing elements', async () => {
-    await driver.get(`http://bs-local.com/test/invalid-missing-element.html`);
-    await driver.sleep(2000);
-    const logs = await driver.manage().logs().get('browser');
-    assert.strictEqual(logs.length, 1);
-    assert.match(logs[0].message, /.*Skipping a11y-select progressive enhancement for \\"demo\\" due to incorrect element type\..*/);
-  });
-
-  it('Will not attempt to progressively enhance invalid element types', async () => {
-    await driver.get(`http://bs-local.com/test/invalid-element-type.html`);
-    await driver.sleep(2000);
-    const logs = await driver.manage().logs().get('browser');
-    assert.strictEqual(logs.length, 1);
-    assert.match(logs[0].message, /.*Skipping a11y-select progressive enhancement for \\"demo\\" due to incorrect element type\..*/);
-  });
-
-  xit('Will warn about the use of option groups on macOS', async () => {
-    // @TODO: Implement test.
-  });
-
-  it('Will warn about disabled options', async () => {
-    await driver.get(`http://bs-local.com/test/warning-disabled-elements.html`);
-    await driver.sleep(2000);
-    const logs = await driver.manage().logs().get('browser');
-    assert.strictEqual(logs.length, 1);
-    assert.match(logs[0].message, /.*One or more disabled options were found. Disabled options will not be transformed. {2}Consider adjusting the options to not include disabled ones\..*/);
-  });
-
   it('Transforms the native select element appropriately', async () => {
     await driver.get(`http://bs-local.com/test/simple.html`);
+    const a11y_select = await driver.findElement(By.css('.a11y-select'));
+    await driver.wait(until.elementIsVisible(a11y_select), 1000);
 
     const select = await driver.findElement(By.tagName('select'));
 
@@ -95,13 +121,19 @@ describe('Simple Tests', () => {
   });
 
   it('Will remove disabled options before transforming elements', async () => {
-    await driver.get(`http://bs-local.com/test/warning-disabled-elements.html`);
+    await driver.get(`http://bs-local.com/test/simple-disabled-elements.html`);
+    const a11y_select = await driver.findElement(By.css('.a11y-select'));
+    await driver.wait(until.elementIsVisible(a11y_select), 1000);
+
     const options = await driver.findElements(By.css('[role="option"]'));
     assert.strictEqual(options.length, 3);
   });
 
   it ('Opens with a mouse', async () => {
     await driver.get(`http://bs-local.com/test/simple.html`);
+    const a11y_select = await driver.findElement(By.css('.a11y-select'));
+    await driver.wait(until.elementIsVisible(a11y_select), 1000);
+
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     const combobox_value = await driver.findElement(By.css('.a11y-select__value'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
@@ -111,6 +143,9 @@ describe('Simple Tests', () => {
 
   it('Opens with the enter key', async () => {
     await driver.get(`http://bs-local.com/test/simple.html`);
+    const a11y_select = await driver.findElement(By.css('.a11y-select'));
+    await driver.wait(until.elementIsVisible(a11y_select), 1000);
+
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
@@ -120,6 +155,9 @@ describe('Simple Tests', () => {
 
   it('Opens with the space key', async () => {
     await driver.get(`http://bs-local.com/test/simple.html`);
+    const a11y_select = await driver.findElement(By.css('.a11y-select'));
+    await driver.wait(until.elementIsVisible(a11y_select), 1000);
+
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
@@ -129,6 +167,9 @@ describe('Simple Tests', () => {
 
   it('Opens appropriately with the arrow-down key', async () => {
     await driver.get(`http://bs-local.com/test/simple.html`);
+    const a11y_select = await driver.findElement(By.css('.a11y-select'));
+    await driver.wait(until.elementIsVisible(a11y_select), 1000);
+
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
@@ -139,6 +180,9 @@ describe('Simple Tests', () => {
 
   it('Opens appropriately with the alt+arrow-down keys', async () => {
     await driver.get(`http://bs-local.com/test/simple.html`);
+    const a11y_select = await driver.findElement(By.css('.a11y-select'));
+    await driver.wait(until.elementIsVisible(a11y_select), 1000);
+
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
@@ -149,6 +193,9 @@ describe('Simple Tests', () => {
 
   it('Opens appropriately with the arrow-up key', async () => {
     await driver.get(`http://bs-local.com/test/simple.html`);
+    const a11y_select = await driver.findElement(By.css('.a11y-select'));
+    await driver.wait(until.elementIsVisible(a11y_select), 1000);
+
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
@@ -159,6 +206,9 @@ describe('Simple Tests', () => {
 
   it('Opens appropriately with the alt+arrow-up keys', async () => {
     await driver.get(`http://bs-local.com/test/simple.html`);
+    const a11y_select = await driver.findElement(By.css('.a11y-select'));
+    await driver.wait(until.elementIsVisible(a11y_select), 1000);
+
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
@@ -169,6 +219,9 @@ describe('Simple Tests', () => {
 
   it('Moves the active descendant down with the arrow-down key', async () => {
     await driver.get(`http://bs-local.com/test/simple.html`);
+    const a11y_select = await driver.findElement(By.css('.a11y-select'));
+    await driver.wait(until.elementIsVisible(a11y_select), 1000);
+
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
@@ -189,6 +242,9 @@ describe('Simple Tests', () => {
 
   it('Moves the active descendant up with the arrow-up key', async () => {
     await driver.get(`http://bs-local.com/test/simple.html`);
+    const a11y_select = await driver.findElement(By.css('.a11y-select'));
+    await driver.wait(until.elementIsVisible(a11y_select), 1000);
+
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
@@ -206,6 +262,9 @@ describe('Simple Tests', () => {
 
   it('Moves the active descendant down 10 options with the page-down key', async () => {
     await driver.get(`http://bs-local.com/test/many-options.html`);
+    const a11y_select = await driver.findElement(By.css('.a11y-select'));
+    await driver.wait(until.elementIsVisible(a11y_select), 1000);
+
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
@@ -223,6 +282,9 @@ describe('Simple Tests', () => {
 
   it('Moves the active descendant up 10 options with the page-up key', async () => {
     await driver.get(`http://bs-local.com/test/many-options.html`);
+    const a11y_select = await driver.findElement(By.css('.a11y-select'));
+    await driver.wait(until.elementIsVisible(a11y_select), 1000);
+
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
@@ -240,6 +302,9 @@ describe('Simple Tests', () => {
 
   it('Moves the active descendant to the first option with the home key', async () => {
     await driver.get(`http://bs-local.com/test/many-options.html`);
+    const a11y_select = await driver.findElement(By.css('.a11y-select'));
+    await driver.wait(until.elementIsVisible(a11y_select), 1000);
+
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
@@ -253,6 +318,9 @@ describe('Simple Tests', () => {
 
   it('Moves the active descendant up last option with the end key', async () => {
     await driver.get(`http://bs-local.com/test/many-options.html`);
+    const a11y_select = await driver.findElement(By.css('.a11y-select'));
+    await driver.wait(until.elementIsVisible(a11y_select), 1000);
+
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
@@ -266,6 +334,9 @@ describe('Simple Tests', () => {
 
   it('Closes the combobox and reverts the user selection with the escape key', async () => {
     await driver.get(`http://bs-local.com/test/simple.html`);
+    const a11y_select = await driver.findElement(By.css('.a11y-select'));
+    await driver.wait(until.elementIsVisible(a11y_select), 1000);
+
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
@@ -285,6 +356,9 @@ describe('Simple Tests', () => {
 
   it('Closes the combobox and reverts the user selection when focus is lost', async () => {
     await driver.get(`http://bs-local.com/test/simple.html`);
+    const a11y_select = await driver.findElement(By.css('.a11y-select'));
+    await driver.wait(until.elementIsVisible(a11y_select), 1000);
+
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
@@ -304,6 +378,9 @@ describe('Simple Tests', () => {
 
   it('Updates the selected option when the user clicks an option', async () => {
     await driver.get(`http://bs-local.com/test/simple.html`);
+    const a11y_select = await driver.findElement(By.css('.a11y-select'));
+    await driver.wait(until.elementIsVisible(a11y_select), 1000);
+
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
@@ -320,6 +397,9 @@ describe('Simple Tests', () => {
 
   it('Updates the selected option when the user uses the enter key to select an option', async () => {
     await driver.get(`http://bs-local.com/test/simple.html`);
+    const a11y_select = await driver.findElement(By.css('.a11y-select'));
+    await driver.wait(until.elementIsVisible(a11y_select), 1000);
+
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
@@ -334,6 +414,9 @@ describe('Simple Tests', () => {
 
   it('Updates the selected option when the user uses the space key to select an option', async () => {
     await driver.get(`http://bs-local.com/test/simple.html`);
+    const a11y_select = await driver.findElement(By.css('.a11y-select'));
+    await driver.wait(until.elementIsVisible(a11y_select), 1000);
+
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
@@ -348,6 +431,9 @@ describe('Simple Tests', () => {
 
   it('Updates the selected option when the user uses the tab key to select an option', async () => {
     await driver.get(`http://bs-local.com/test/simple.html`);
+    const a11y_select = await driver.findElement(By.css('.a11y-select'));
+    await driver.wait(until.elementIsVisible(a11y_select), 1000);
+
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
@@ -361,3 +447,7 @@ describe('Simple Tests', () => {
   });
 
 });
+
+/*describe('Optgroup Tests', () => {
+
+});*/

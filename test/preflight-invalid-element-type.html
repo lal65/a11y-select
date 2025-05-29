@@ -6,7 +6,13 @@
     <link rel="stylesheet" href="../dist/a11y-select.min.css" />
   </head>
   <body>
+    <div class="a11y-select-demo">
+    </div>
     <script type="module">
+      window.console = {
+        errors: [],
+        error: function(msg) { this.errors.push(msg) },
+      };
       import {a11ySelect} from '../dist/a11y-select.min.mjs';
       a11ySelect(document.querySelector('.a11y-select-demo'), 'demo');
     </script>

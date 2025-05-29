@@ -6,22 +6,19 @@
     <link rel="stylesheet" href="../dist/a11y-select.min.css" />
   </head>
   <body>
-    <select class="a11y-select-demo">
-      <option value="">Select an option</option>
-      <option value="1" selected>Option 1</option>
-      <option value="2">Option 2</option>
-      <option value="3">Option 3</option>
-    </select>
-    <select class="a11y-select-demo-2">
+    <select class="a11y-select-demo" disabled>
       <option value="">Select an option</option>
       <option value="1" selected>Option 1</option>
       <option value="2">Option 2</option>
       <option value="3">Option 3</option>
     </select>
     <script type="module">
+      window.console = {
+        errors: [],
+        error: function(msg) { this.errors.push(msg) },
+      };
       import {a11ySelect} from '../dist/a11y-select.min.mjs';
       a11ySelect(document.querySelector('.a11y-select-demo'), 'demo');
-      a11ySelect(document.querySelector('.a11y-select-demo-2'), 'demo');
     </script>
   </body>
 </html>
