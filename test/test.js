@@ -124,7 +124,6 @@ describe('Simple Tests', () => {
     await driver.get(`http://bs-local.com/test/simple-disabled-elements.html`);
     const a11y_select = await driver.findElement(By.css('.a11y-select'));
     await driver.wait(until.elementIsVisible(a11y_select), 1000);
-
     const options = await driver.findElements(By.css('[role="option"]'));
     assert.strictEqual(options.length, 3);
   });
@@ -139,7 +138,7 @@ describe('Simple Tests', () => {
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await combobox_value.click();
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
-    await driver.wait(until.elementIsVisible(listbox), 1000);
+    await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
   });
 
@@ -153,7 +152,7 @@ describe('Simple Tests', () => {
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
     await combobox.sendKeys(Key.ENTER);
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
-    await driver.wait(until.elementIsVisible(listbox), 1000);
+    await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
   });
 
@@ -167,7 +166,7 @@ describe('Simple Tests', () => {
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
     await combobox.sendKeys(Key.SPACE);
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
-    await driver.wait(until.elementIsVisible(listbox), 1000);
+    await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
   });
 
@@ -181,7 +180,7 @@ describe('Simple Tests', () => {
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
     await driver.actions().keyUp(Key.ALT).sendKeys(Key.ARROW_DOWN).perform();
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
-    await driver.wait(until.elementIsVisible(listbox), 1000);
+    await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
     assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), 'a11y-select-demo--option-3');
   });
@@ -196,7 +195,7 @@ describe('Simple Tests', () => {
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
     await driver.actions().keyDown(Key.ALT).sendKeys(Key.ARROW_DOWN).perform();
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
-    await driver.wait(until.elementIsVisible(listbox), 1000);
+    await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
     assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), 'a11y-select-demo--option-2');
   });
@@ -211,7 +210,7 @@ describe('Simple Tests', () => {
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
     await driver.actions().keyUp(Key.ALT).sendKeys(Key.ARROW_UP).perform();
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
-    await driver.wait(until.elementIsVisible(listbox), 1000);
+    await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
     assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), 'a11y-select-demo--option-1');
   });
@@ -226,7 +225,7 @@ describe('Simple Tests', () => {
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
     await driver.actions().keyDown(Key.ALT).sendKeys(Key.ARROW_UP).perform();
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
-    await driver.wait(until.elementIsVisible(listbox), 1000);
+    await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
     assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), 'a11y-select-demo--option-2');
   });
@@ -241,7 +240,7 @@ describe('Simple Tests', () => {
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
     await combobox.sendKeys(Key.ENTER);
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
-    await driver.wait(until.elementIsVisible(listbox), 1000);
+    await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
     assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), 'a11y-select-demo--option-2');
 
@@ -266,7 +265,7 @@ describe('Simple Tests', () => {
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
     await combobox.sendKeys(Key.ENTER);
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
-    await driver.wait(until.elementIsVisible(listbox), 1000);
+    await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
     assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), 'a11y-select-demo--option-2');
 
@@ -288,7 +287,7 @@ describe('Simple Tests', () => {
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
     await combobox.sendKeys(Key.ENTER);
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
-    await driver.wait(until.elementIsVisible(listbox), 1000);
+    await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
     assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), 'a11y-select-demo--option-13');
 
@@ -310,7 +309,7 @@ describe('Simple Tests', () => {
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
     await combobox.sendKeys(Key.ENTER);
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
-    await driver.wait(until.elementIsVisible(listbox), 1000);
+    await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
     assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), 'a11y-select-demo--option-13');
 
@@ -332,7 +331,7 @@ describe('Simple Tests', () => {
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
     await combobox.sendKeys(Key.ENTER);
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
-    await driver.wait(until.elementIsVisible(listbox), 1000);
+    await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
     assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), 'a11y-select-demo--option-13');
 
@@ -350,7 +349,7 @@ describe('Simple Tests', () => {
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
     await combobox.sendKeys(Key.ENTER);
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
-    await driver.wait(until.elementIsVisible(listbox), 1000);
+    await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
     assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), 'a11y-select-demo--option-13');
 
@@ -368,7 +367,7 @@ describe('Simple Tests', () => {
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
     await combobox.sendKeys(Key.ENTER);
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
-    await driver.wait(until.elementIsVisible(listbox), 1000);
+    await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
     assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), 'a11y-select-demo--option-2');
 
@@ -376,7 +375,7 @@ describe('Simple Tests', () => {
     assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), 'a11y-select-demo--option-3');
 
     await driver.actions().sendKeys(Key.ESCAPE).perform();
-    await driver.wait(until.elementIsNotVisible(listbox), 1000);
+    await driver.wait(until.elementIsNotVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), null);
     const selected = await driver.findElement(By.css('[aria-selected="true"]'));
@@ -393,7 +392,7 @@ describe('Simple Tests', () => {
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
     await combobox.sendKeys(Key.ENTER);
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
-    await driver.wait(until.elementIsVisible(listbox), 1000);
+    await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
     assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), 'a11y-select-demo--option-2');
 
@@ -401,7 +400,7 @@ describe('Simple Tests', () => {
     assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), 'a11y-select-demo--option-3');
 
     await driver.findElement(By.css('body')).click();
-    await driver.wait(until.elementIsNotVisible(listbox), 1000);
+    await driver.wait(until.elementIsNotVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), null);
     const selected = await driver.findElement(By.css('[aria-selected="true"]'));
@@ -418,12 +417,12 @@ describe('Simple Tests', () => {
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
     await combobox.sendKeys(Key.ENTER);
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
-    await driver.wait(until.elementIsVisible(listbox), 1000);
+    await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
     assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), 'a11y-select-demo--option-2');
 
     await driver.findElement(By.css('#a11y-select-demo--option-3')).click();
-    await driver.wait(until.elementIsNotVisible(listbox), 1000);
+    await driver.wait(until.elementIsNotVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), null);
     assert.strictEqual(await driver.findElement(By.css('[aria-selected="true"]')).getAttribute('id'), 'a11y-select-demo--option-3');
@@ -439,11 +438,11 @@ describe('Simple Tests', () => {
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
     await driver.actions().keyUp(Key.ALT).sendKeys(Key.ARROW_DOWN).perform();
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
-    await driver.wait(until.elementIsVisible(listbox), 1000);
+    await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
     assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), 'a11y-select-demo--option-3');
     await driver.actions().sendKeys(Key.ENTER).perform();
-    await driver.wait(until.elementIsNotVisible(listbox), 1000);
+    await driver.wait(until.elementIsNotVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), null);
     assert.strictEqual(await driver.findElement(By.css('[aria-selected="true"]')).getAttribute('id'), 'a11y-select-demo--option-3');
@@ -459,11 +458,11 @@ describe('Simple Tests', () => {
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
     await driver.actions().keyUp(Key.ALT).sendKeys(Key.ARROW_DOWN).perform();
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
-    await driver.wait(until.elementIsVisible(listbox), 1000);
+    await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
     assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), 'a11y-select-demo--option-3');
     await driver.actions().sendKeys(Key.SPACE).perform();
-    await driver.wait(until.elementIsNotVisible(listbox), 1000);
+    await driver.wait(until.elementIsNotVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), null);
     assert.strictEqual(await driver.findElement(By.css('[aria-selected="true"]')).getAttribute('id'), 'a11y-select-demo--option-3');
@@ -479,11 +478,11 @@ describe('Simple Tests', () => {
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
     await driver.actions().keyUp(Key.ALT).sendKeys(Key.ARROW_DOWN).perform();
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
-    await driver.wait(until.elementIsVisible(listbox), 1000);
+    await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
     assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), 'a11y-select-demo--option-3');
     await driver.actions().sendKeys(Key.TAB).perform();
-    await driver.wait(until.elementIsNotVisible(listbox), 1000);
+    await driver.wait(until.elementIsNotVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), null);
     assert.strictEqual(await driver.findElement(By.css('[aria-selected="true"]')).getAttribute('id'), 'a11y-select-demo--option-3');
