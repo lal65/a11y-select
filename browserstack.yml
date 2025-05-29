@@ -4,14 +4,14 @@
 # Platforms object contains all the browser / device combinations you want to test on.
 # Entire list available here -> (https://www.browserstack.com/list-of-browsers-and-platforms/automate)
 platforms:
-  - browserName: Chrome
-    os: Windows
-    osVersion: 10
-    browserVersion: latest
-#  - browserName: Safari
-#    os: OS X
-#    osVersion: Sequoia
-#    browserVersion: 18.4
+#  - browserName: Chrome
+#    os: Windows
+#    osVersion: 10
+#    browserVersion: latest
+  - browserName: Safari
+    os: OS X
+    osVersion: Sequoia
+    browserVersion: 18.4
 #  - browserName: chrome
 #    osVersion: 15.0
 #    deviceName: Google Pixel 9 Pro
