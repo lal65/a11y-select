@@ -193,9 +193,10 @@ describe('Simple Tests', () => {
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
-    await driver.actions().keyDown(Key.ALT).perform();
+    const alt_key = await driver.executeScript('return navigator.vendor === "Apple Computer, Inc." ? \'\u2325\' : \'\uE00A\'');
+    await driver.actions().keyDown(alt_key).perform();
     await combobox.sendKeys(Key.ARROW_DOWN);
-    await driver.actions().keyUp(Key.ALT).perform();
+    await driver.actions().keyUp(alt_key).perform();
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
     await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
@@ -211,6 +212,7 @@ describe('Simple Tests', () => {
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
     await combobox.sendKeys(Key.ARROW_UP);
+
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
     await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
@@ -225,9 +227,10 @@ describe('Simple Tests', () => {
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
-    await driver.actions().keyDown(Key.ALT).perform();
+    const alt_key = await driver.executeScript('return navigator.vendor === "Apple Computer, Inc." ? \'\u2325\' : \'\uE00A\'');
+    await driver.actions().keyDown(alt_key).perform();
     await combobox.sendKeys(Key.ARROW_UP);
-    await driver.actions().keyUp(Key.ALT).perform();
+    await driver.actions().keyUp(alt_key).perform();
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
     await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
