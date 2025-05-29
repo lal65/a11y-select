@@ -15,13 +15,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
-      - name: Install webserver
-        run: sudo apt update && sudo apt install apache2
       - name: Add hosts file entry
         run: echo "127.0.0.1 bs-local.com" | sudo tee -a /etc/hosts > /dev/null
       - name: Add virtual host
         run: |
-          sudo cat > /etc/apache2/sites-available/100-actions.conf <<VHOST
+          sudo cat > /etc/apache2/sites-available/100-actions.conf << VHOST
             <VirtualHost *:80>
               ServerName bs-local.com
               DocumentRoot ${{ github.workspace }}/${{ github.event.repository.name }}
