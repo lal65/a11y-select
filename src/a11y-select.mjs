@@ -183,7 +183,7 @@ export const a11ySelect = (native_select, unique_id) => {
   // if detected, a console warning was previously emitted by this library.
 
   // Set up some counters in order to keep the option ID values unique.
-  let group_counter, option_counter = 0;
+  let group_counter = 0, option_counter = 0;
 
   /**
    * Transforms a native option element to a combobox option.
@@ -241,7 +241,7 @@ export const a11ySelect = (native_select, unique_id) => {
     });
 
     combobox_group.appendChild(group_accessible_name);
-    combobox_group.setAttribute('aria-labelledby', `a11y-select-${unique_id}--optgroup-${group_counter}`);
+    combobox_group.setAttribute('aria-labelledby', `a11y-select-${unique_id}--optgroup-${unique_counter}`);
     group.querySelectorAll('option:not([disabled])').forEach(option => {
       create_combobox_option(option, group, ++option_counter);
     });
