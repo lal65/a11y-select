@@ -73,7 +73,7 @@ describe('Preflight checks', () => {
   });
 
 });
-/*
+
 describe('Simple Tests', () => {
   let driver;
 
@@ -446,7 +446,7 @@ describe('Simple Tests', () => {
     assert.strictEqual(await driver.findElement(By.css('[aria-selected="true"]')).getAttribute('id'), 'a11y-select-demo--option-3');
   });
 
-});*/
+});
 
 /*describe('Optgroup Tests', () => {
 
