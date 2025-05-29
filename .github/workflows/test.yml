@@ -19,7 +19,7 @@ jobs:
         run: echo "127.0.0.1 bs-local.com" | sudo tee -a /etc/hosts > /dev/null
       - name: Add virtual host
         run: |
-          sudo cat > /etc/apache2/sites-available/100-actions.conf << VHOST
+          sudo cat > /etc/apache2/sites-enabled/100-actions.conf << VHOST
             <VirtualHost *:80>
               ServerName bs-local.com
               DocumentRoot ${{ github.workspace }}/${{ github.event.repository.name }}
