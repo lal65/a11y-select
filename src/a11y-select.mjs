@@ -11,24 +11,16 @@ export const a11ySelect = (native_select, unique_id) => {
   }
   unique_ids.push(unique_id);
 
-  // @TODO: Remove user-agent detection when Safari 17 is no longer supported.
-  const is_probably_safari = navigator.vendor === 'Apple Computer, Inc.';
+  // @TODO: Remove user-agent detection when macOS 14 is no longer supported.
   const is_probably_macos = navigator.platform === 'MacIntel';
+  const is_probably_safari = navigator.vendor === 'Apple Computer, Inc.';
 
-  // Content visibility support was added in Safari 18.0.
-  // @see https://developer.apple.com/documentation/safari-release-notes/safari-18-release-notes
-  const might_be_safari_17_or_earlier = !('contentVisibility' in document.documentElement.style);
-
-  // Prior to Safari 18, the aria-activedescendant attribute is not supported.
+  // Prior to macOS 15, the aria-activedescendant attribute is not supported.
   // This attribute is critical for the proper identification of the currently
   // active descendant for VoiceOver on macOS.  Our testing indicates that the
   // attribute is of lesser importance for VoiceOver on iOS.
-  //
-  // Therefore, we prevent the progressive enhancement of select elements if
-  // the user-agent is Safari < 18 on macOS because the native select element
-  // will be more accessible.
-  if (is_probably_safari && is_probably_macos && might_be_safari_17_or_earlier) {
-    console.info('The a11y-select progressive enhancement was not applied due to an incompatible user-agent.  The combobox pattern is not accessible in MacOS Safari 17 or earlier.');
+  if (is_probably_macos && is_probably_safari) {
+    console.info('The a11y-select progressive enhancement was not applied due to an incompatible user-agent.  The combobox pattern is not accessible in macOS 14 or earlier and Apple does not allow for operating system version detection via javascript.');
     return;
   }
 
