@@ -20,15 +20,15 @@ jobs:
       - name: Add virtual host
         run: |
           sudo tee /etc/apache2/sites-enabled/100-actions.conf > /dev/null <<< VHOST
-            <VirtualHost *:80>
-              ServerName bs-local.com
-              DocumentRoot ${{ github.workspace }}/${{ github.event.repository.name }}
-              <Directory ${{ github.workspace }}/${{ github.event.repository.name }}>
-                Require all granted
-                Options +FollowSymLinks
-                AllowOverride All
-              </Directory>
-            </VirtualHost>
+          <VirtualHost *:80>
+            ServerName bs-local.com
+            DocumentRoot ${{ github.workspace }}/${{ github.event.repository.name }}
+            <Directory ${{ github.workspace }}/${{ github.event.repository.name }}>
+              Require all granted
+              Options +FollowSymLinks
+              AllowOverride All
+            </Directory>
+          </VirtualHost>
           VHOST
       - name: Restart apache
         run: sudo service apache2 restart
