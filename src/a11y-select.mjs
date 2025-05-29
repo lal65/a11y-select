@@ -284,6 +284,7 @@ export const a11ySelect = (native_select, unique_id) => {
     combobox.setAttribute('aria-expanded', 'false');
     if (update_selection) {
       last_selected_option = selected_option = active_descendant;
+      native_select.value = selected_option.getAttribute('data-native-option-value');
     }
     else {
       selected_option = last_selected_option;

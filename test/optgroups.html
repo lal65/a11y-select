@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>Demo</title>
-  <link rel="stylesheet" href="../dist/a11y-select.min.css" />
-</head>
-<body>
-<select class="a11y-select-demo">
-  <option value="">Select an option</option>
-  <optgroup label="Option group 1">
-    <option value="1" selected>Option 1</option>
-    <option value="2">Option 2</option>
-    <option value="3">Option 3</option>
-  </optgroup>
-  <optgroup label="Option group 2">
-    <option value="4">Option 4</option>
-    <option value="5">Option 5</option>
-    <option value="6">Option 6</option>
-  </optgroup>
-</select>
-<script type="module">
-  import {a11ySelect} from '../dist/a11y-select.min.mjs';
-  a11ySelect(document.querySelector('.a11y-select-demo'), 'demo');
-</script>
-</body>
+  <head>
+    <meta charset="utf-8">
+    <title>Demo</title>
+    <link rel="stylesheet" href="../dist/a11y-select.min.css" />
+  </head>
+  <body>
+    <select class="a11y-select-demo">
+      <option value="">Select an option</option>
+      <optgroup label="Option group 1">
+        <option value="1" selected>Option 1</option>
+        <option value="2">Option 2</option>
+        <option value="3">Option 3</option>
+      </optgroup>
+      <optgroup label="Option group 2">
+        <option value="4">Option 4</option>
+        <option value="5">Option 5</option>
+        <option value="6">Option 6</option>
+      </optgroup>
+    </select>
+    <script type="module">
+      import {a11ySelect} from '../dist/a11y-select.min.mjs';
+      a11ySelect(document.querySelector('.a11y-select-demo'), 'demo');
+    </script>
+  </body>
 </html>

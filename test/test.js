@@ -450,8 +450,80 @@ describe('Simple Tests', () => {
     assert.strictEqual(await driver.findElement(By.css('[aria-selected="true"]')).getAttribute('id'), 'a11y-select-demo--option-3');
   });
 
+  it('Updates the native select element value when a new value is chosen', async () => {
+    await driver.get(`http://bs-local.com/test/simple.html`);
+    const a11y_select = await driver.findElement(By.css('.a11y-select'));
+    await driver.wait(until.elementIsVisible(a11y_select), 1000);
+
+    const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
+    assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
+    await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
+    await combobox.sendKeys(Key.ENTER);
+    assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
+    assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), 'a11y-select-demo--option-2');
+
+    await driver.findElement(By.css('#a11y-select-demo--option-3')).click();
+    const selected_option = await driver.findElement(By.css('option[selected]'));
+    assert.strictEqual(await selected_option.getAttribute("textContent"), 'Option 2');
+  });
+
 });
 
-/*describe('Optgroup Tests', () => {
+describe('Optgroup Tests', () => {
+  let driver;
 
-});*/
+  before(async () => {
+    driver = await new Builder().withCapabilities({
+      'goog:loggingPrefs': { browser: 'ALL' },
+    }).forBrowser(Browser.CHROME).build();
+  })
+
+  after(async () => {
+    await driver.quit();
+  });
+
+
+  it('Transforms the native select element appropriately', async () => {
+    await driver.get(`http://bs-local.com/test/optgroups.html`);
+    const a11y_select = await driver.findElement(By.css('.a11y-select'));
+    await driver.wait(until.elementIsVisible(a11y_select), 1000);
+
+    const select = await driver.findElement(By.tagName('select'));
+
+    assert.strictEqual(
+      await select.getCssValue('display'),
+      'none',
+      'The native select element is hidden from the accessibility tree.'
+    );
+
+    const native_optgroups = await driver.findElements(By.tagName('optgroup'));
+    for (const optgroup of native_optgroups) {
+      const label = await optgroup.getAttribute('label');
+      const replacement_optgroup_label = await driver.findElement(By.xpath('//*[text()="' + label + '"][1]'));
+      const replacement_optgroup = await driver.findElement(By.css(`[aria-labelledby="${await replacement_optgroup_label.getAttribute('id')}`));
+      assert.strictEqual(
+        await replacement_optgroup.getAttribute('role'),
+        'group',
+      );
+
+      const native_options = await optgroup.findElements(By.tagName('option'));
+      for (const option of native_options) {
+        const value = await option.getAttribute('value');
+
+        const replacement_option = await driver.findElement(By.css('[data-native-option-value="' + value + '"]'));
+        assert.strictEqual(
+          await option.getAttribute('textContent'),
+          await replacement_option.getAttribute('textContent'),
+          'The replacement option has an appropriate label.'
+        );
+
+        assert.strictEqual(
+          await option.getAttribute('selected') ? 'true' : 'false',
+          await replacement_option.getAttribute('aria-selected'),
+          'The replacement option has an appropriate selection state.'
+        );
+      }
+
+    }
+  });
+});
