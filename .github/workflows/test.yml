@@ -31,8 +31,8 @@ jobs:
             </Directory>
           </VirtualHost>
           VHOST
-      - name: Add apache user to current user's group
-        run: sudo usermod -aG $USER www-data && sudo chmod -R g+rx /home/$USER
+      - name: Allow webserver to access workspace
+        run: sudo chgrp www-data /home/$USER
       - name: Restart apache
         run: sudo service apache2 restart
       - name: Debug
