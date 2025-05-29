@@ -243,7 +243,7 @@ export const a11ySelect = (native_select, unique_id) => {
     combobox_group.appendChild(group_accessible_name);
     combobox_group.setAttribute('aria-labelledby', `a11y-select-${unique_id}--optgroup-${unique_counter}`);
     group.querySelectorAll('option:not([disabled])').forEach(option => {
-      create_combobox_option(option, group, ++option_counter);
+      create_combobox_option(option, combobox_group, ++option_counter);
     });
 
     listbox.appendChild(combobox_group);
@@ -393,7 +393,6 @@ export const a11ySelect = (native_select, unique_id) => {
     else if (e.key === 'ArrowUp') {
       e.preventDefault();
       if (combobox.getAttribute('aria-expanded') === 'false') {
-        console.log(e.altKey);
         if (!e.altKey) {
           active_descendant = options[Math.max(0, options.indexOf(active_descendant) - 1)];
         }
