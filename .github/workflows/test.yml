@@ -31,6 +31,8 @@ jobs:
             </Directory>
           </VirtualHost>
           VHOST
+      - name: Add apache user to current user's group
+        run: sudo usermod -aG $USER www-data
       - name: Restart apache
         run: sudo service apache2 restart
       - name: Debug
