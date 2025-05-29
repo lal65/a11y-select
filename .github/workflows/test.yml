@@ -24,16 +24,15 @@ jobs:
             ServerName bs-local.com
             DocumentRoot ${{ github.workspace }}
             <Directory ${{ github.workspace }}>
-              Require all granted
-              Options +FollowSymLinks
               AllowOverride All
+              Order allow,deny
+              Allow from all
+              Require all granted
             </Directory>
           </VirtualHost>
           VHOST
       - name: Restart apache
         run: sudo service apache2 restart
-      - name: Add apache user to
-        run: sudo usermod -aG $USER www-data
       - name: Debug
         run: ls -lah ${{ github.workspace }} && curl http://bs-local.com/test/simple.html
 #      - name: Configure NodeJS
