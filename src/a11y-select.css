@@ -11,6 +11,11 @@
   box-shadow: var(--a11y-select-combobox-box-shadow, color-mix(in srgb, #314d64 55%, #fff) 0 .0625rem 0);
 }
 
+.a11y-select__combobox[aria-expanded="true"] {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
 .a11y-select__combobox:focus,
 .a11y-select__combobox:focus-visible {
   outline: none;
@@ -34,11 +39,14 @@
   position: relative;
   overflow: auto;
 
+  background: var(--a11y-select-listbox-background, color-mix(in srgb, #96bee6, #fff 60%));
+  border-radius: var(--a11y-select-listbox-border-radius, 0 0 .3125rem .3125rem);
+  box-shadow: var(--a11y-select-listbox-box-shadow, color-mix(in srgb, #314d64 55%, #fff) 0 .0625rem 0);
   max-height: var(--a11y-select-listbox-max-height, min(39rem,50vh - 6rem));
   padding: var(--a11y-select-listbox-padding, .25rem 1rem 1rem 1rem);
 }
 
-.a11y-select [aria-expanded="true"] > [role="listbox"] {
+.a11y-select [aria-expanded="true"] + [role="listbox"] {
   display: block;
 }
 

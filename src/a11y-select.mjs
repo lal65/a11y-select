@@ -88,11 +88,11 @@ export const a11ySelect = (native_select, unique_id) => {
   const combobox = Object.assign(document.createElement('div'), {
     className: 'a11y-select__combobox',
     tabIndex: '0',
-    ariaControls: [`a11y-select-${unique_id}--listbox`],
     ariaHasPopup: 'listbox',
     role: 'combobox',
     ariaExpanded: 'false',
   });
+  combobox.setAttribute('aria-controls', `a11y-select-${unique_id}--listbox`);
 
   /**
    * This is an element within the combobox used to display its current value.
@@ -210,7 +210,7 @@ export const a11ySelect = (native_select, unique_id) => {
     combobox_option.setAttribute('data-native-option-value', option.getAttribute('value'));
     combobox_option.addEventListener('click', e => {
       e.preventDefault();
-      active_descendant = selected_option = combobox_option;
+      active_descendant = combobox_option;
       closeCombobox(true);
     });
     options.push(combobox_option);
@@ -258,8 +258,6 @@ export const a11ySelect = (native_select, unique_id) => {
     }
   });
 
-  combobox.appendChild(listbox);
-
   // If no option is selected, we should use the first option.  Note that we
   // have already removed all the disabled options.
   // @see https://html.spec.whatwg.org/multipage/form-elements.html#selectedness-setting-algorithm
@@ -273,7 +271,7 @@ export const a11ySelect = (native_select, unique_id) => {
    */
   function openCombobox() {
     combobox.setAttribute('aria-expanded', 'true');
-    revalidateState(false);
+    revalidateState();
   }
 
   /**
@@ -285,42 +283,33 @@ export const a11ySelect = (native_select, unique_id) => {
   function closeCombobox(update_selection) {
     combobox.setAttribute('aria-expanded', 'false');
     if (update_selection) {
-      active_descendant = last_selected_option = selected_option;
+      last_selected_option = selected_option = active_descendant;
     }
     else {
       selected_option = last_selected_option;
     }
-    revalidateState(true);
+    revalidateState();
     combobox.removeAttribute('aria-activedescendant');
   }
 
   /**
    * Revalidates the combobox state.
-   *
-   * @param {boolean} update_visually_selected_option
-   *   If true, the visually selected element will be updated.  This flag is
-   *   only set by the combobox close function.
-   *
    */
-  function revalidateState(update_visually_selected_option = false) {
+  function revalidateState() {
     combobox.setAttribute('aria-busy', 'true');
     combobox.removeAttribute('aria-activedescendant');
 
     // Reset the aria-selected option.
     listbox.querySelector('[aria-selected="true"]')?.setAttribute('aria-selected', 'false');
 
-    if (update_visually_selected_option) {
-      listbox.querySelector('.a11y-select__option--selected')?.classList.remove('a11y-select__option--selected');
-    }
+    listbox.querySelector('.a11y-select__option--selected')?.classList.remove('a11y-select__option--selected');
 
     // Reset the aria-activedescendant option.
     listbox.querySelector('.a11y-select__option--active-descendant')?.classList.remove('a11y-select__option--active-descendant');
 
     // Re-apply the correct aria-selected option.
     selected_option?.setAttribute('aria-selected', 'true');
-    if (update_visually_selected_option) {
-      selected_option?.classList.add('a11y-select__option--selected');
-    }
+    selected_option?.classList.add('a11y-select__option--selected');
 
     // Re-apply the aria-activedescendant option.
     active_descendant?.classList.add('a11y-select__option--active-descendant');
@@ -328,9 +317,7 @@ export const a11ySelect = (native_select, unique_id) => {
       combobox.setAttribute('aria-activedescendant', active_descendant.getAttribute('id'));
     }
 
-    if (update_visually_selected_option) {
-      combobox_value.textContent = selected_option.textContent;
-    }
+    combobox_value.textContent = selected_option.textContent;
 
     combobox.removeAttribute('aria-busy');
   }
@@ -345,7 +332,7 @@ export const a11ySelect = (native_select, unique_id) => {
   // When focus leaves the expanded combobox, close it and revert the user
   // selection to what it previously was when they last opened it.
   combobox.addEventListener('focusout', e => {
-    if (combobox.getAttribute('aria-expanded') === 'true' && !combobox.contains(e.relatedTarget)) {
+    if (combobox.getAttribute('aria-expanded') === 'true' && !combobox.nextElementSibling.contains(e.relatedTarget)) {
       closeCombobox(false);
     }
   });
@@ -382,8 +369,8 @@ export const a11ySelect = (native_select, unique_id) => {
     else if (e.key === 'Home') {
       if (combobox.getAttribute('aria-expanded') === 'true') {
         e.preventDefault();
-        selected_option = active_descendant = options[0];
-        revalidateState(false);
+        active_descendant = options[0];
+        revalidateState();
         maintainScrollVisibility();
       }
     }
@@ -392,8 +379,8 @@ export const a11ySelect = (native_select, unique_id) => {
     else if (e.key === 'PageUp') {
       if (combobox.getAttribute('aria-expanded') === 'true') {
         e.preventDefault();
-        selected_option = active_descendant = options[Math.max(0, options.indexOf(active_descendant) - 10)];
-        revalidateState(false);
+        active_descendant = options[Math.max(0, options.indexOf(active_descendant) - 10)];
+        revalidateState();
         maintainScrollVisibility(active_descendant, listbox);
       }
     }
@@ -406,14 +393,15 @@ export const a11ySelect = (native_select, unique_id) => {
     else if (e.key === 'ArrowUp') {
       e.preventDefault();
       if (combobox.getAttribute('aria-expanded') === 'false') {
+        console.log(e.altKey);
         if (!e.altKey) {
-          selected_option = active_descendant = options[Math.max(0, options.indexOf(active_descendant) - 1)];
+          active_descendant = options[Math.max(0, options.indexOf(active_descendant) - 1)];
         }
         openCombobox();
       }
       else {
-        selected_option = active_descendant = options[Math.max(0, options.indexOf(active_descendant) - 1)];
-        revalidateState(false);
+        active_descendant = options[Math.max(0, options.indexOf(active_descendant) - 1)];
+        revalidateState();
       }
       maintainScrollVisibility(active_descendant, listbox);
     }
@@ -428,13 +416,13 @@ export const a11ySelect = (native_select, unique_id) => {
 
       if (combobox.getAttribute('aria-expanded') === 'false') {
         if (!e.altKey) {
-          selected_option = active_descendant = options[Math.min(options.indexOf(active_descendant) + 1, options.length - 1)];
+          active_descendant = options[Math.min(options.indexOf(active_descendant) + 1, options.length - 1)];
         }
         openCombobox();
       }
       else {
-        selected_option = active_descendant = options[Math.min(options.indexOf(active_descendant) + 1, options.length - 1)];
-        revalidateState(false);
+        active_descendant = options[Math.min(options.indexOf(active_descendant) + 1, options.length - 1)];
+        revalidateState();
       }
 
       maintainScrollVisibility(active_descendant, listbox);
@@ -444,8 +432,8 @@ export const a11ySelect = (native_select, unique_id) => {
     else if (e.key === 'PageDown') {
       if (combobox.getAttribute('aria-expanded') === 'true') {
         e.preventDefault();
-        selected_option = active_descendant = options[Math.min(options.indexOf(active_descendant) + 10, options.length - 1)];
-        revalidateState(false);
+        active_descendant = options[Math.min(options.indexOf(active_descendant) + 10, options.length - 1)];
+        revalidateState();
         maintainScrollVisibility(active_descendant, listbox);
       }
     }
@@ -454,8 +442,8 @@ export const a11ySelect = (native_select, unique_id) => {
     else if (e.key === 'End') {
       if (combobox.getAttribute('aria-expanded') === 'true') {
         e.preventDefault();
-        selected_option = active_descendant = options[options.length - 1];
-        revalidateState(false);
+        active_descendant = options[options.length - 1];
+        revalidateState();
         maintainScrollVisibility();
       }
     }
@@ -467,6 +455,7 @@ export const a11ySelect = (native_select, unique_id) => {
   requestAnimationFrame(() => {
     native_select.style.display = 'none';
     wrapping_element.appendChild(combobox);
+    wrapping_element.appendChild(listbox);
   });
 
 };

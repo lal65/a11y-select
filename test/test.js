@@ -81,7 +81,6 @@ describe('Simple Tests', () => {
     driver = await new Builder().withCapabilities({
       'goog:loggingPrefs': { browser: 'ALL' },
     }).forBrowser(Browser.CHROME).build();
-    await driver.manage().setTimeouts({ implicit: 5000 });
   })
 
   after(async () => {
@@ -186,7 +185,9 @@ describe('Simple Tests', () => {
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
-    await driver.actions().keyDown(Key.ALT).sendKeys(Key.ARROW_DOWN).perform();
+    await driver.actions().keyDown(Key.ALT).sendKeys(Key.ARROW_DOWN).keyUp(Key.ALT).perform();
+    const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
+    await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
     assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), 'a11y-select-demo--option-2');
   });
@@ -212,7 +213,10 @@ describe('Simple Tests', () => {
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
-    await driver.actions().keyDown(Key.ALT).sendKeys(Key.ARROW_UP).perform();
+    await driver.actions().keyDown(Key.ALT).sendKeys(Key.ARROW_UP).keyUp(Key.ALT).perform();
+
+    const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
+    await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
     assert.strictEqual(await combobox.getAttribute('aria-activedescendant'), 'a11y-select-demo--option-2');
   });
