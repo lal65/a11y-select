@@ -178,7 +178,7 @@ describe('Simple Tests', () => {
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
-    await driver.actions().keyUp(Key.ALT).sendKeys(Key.ARROW_DOWN).perform();
+    await driver.actions().sendKeys(Key.ARROW_DOWN).perform();
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
     await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
@@ -193,7 +193,7 @@ describe('Simple Tests', () => {
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
-    await driver.actions().keyDown(Key.ALT).sendKeys(Key.ARROW_DOWN).perform();
+    await driver.actions().keyDown(Key.ALT).sendKeys(Key.ARROW_DOWN).keyUp(Key.ALT).perform();
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
     await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
@@ -208,7 +208,7 @@ describe('Simple Tests', () => {
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
-    await driver.actions().keyUp(Key.ALT).sendKeys(Key.ARROW_UP).perform();
+    await driver.actions().sendKeys(Key.ARROW_UP).perform();
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
     await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
@@ -223,7 +223,7 @@ describe('Simple Tests', () => {
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
-    await driver.actions().keyDown(Key.ALT).sendKeys(Key.ARROW_UP).perform();
+    await driver.actions().keyDown(Key.ALT).sendKeys(Key.ARROW_UP).keyUp(Key.ALT).perform();
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
     await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
@@ -436,7 +436,7 @@ describe('Simple Tests', () => {
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
-    await driver.actions().keyUp(Key.ALT).sendKeys(Key.ARROW_DOWN).perform();
+    await driver.actions().sendKeys(Key.ARROW_DOWN).perform();
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
     await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
@@ -456,7 +456,7 @@ describe('Simple Tests', () => {
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
-    await driver.actions().keyUp(Key.ALT).sendKeys(Key.ARROW_DOWN).perform();
+    await driver.actions().sendKeys(Key.ARROW_DOWN).perform();
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
     await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
@@ -476,7 +476,7 @@ describe('Simple Tests', () => {
     const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
-    await driver.actions().keyUp(Key.ALT).sendKeys(Key.ARROW_DOWN).perform();
+    await driver.actions().sendKeys(Key.ARROW_DOWN).perform();
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
     await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
