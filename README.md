@@ -19,6 +19,31 @@ backwards-compatibility accommodations. There are well documented expectations
 in regard to what are supported customizations. If customizations are made
 outside the documented expectations, expect breakages between releases.
 
+## Basic Example
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <title>a11y-select | Basic Example</title>
+  <head>
+    <link rel="stylesheet" href="dist/a11y-select.min.css">
+  </head>
+  <body>
+    <label for="demo-select">Demo Select</label>
+    <select id="demo-select">
+      <option>Select an option</option>
+      <option value="option-1">Option 1</option>
+      <option value="option-2">Option 2</option>
+      <option value="option-3">Option 3</option>
+    </select>
+    <script type="module">
+      import {a11ySelect} from 'dist/a11y-select.min.mjs';
+      a11ySelect(document.getElementById('demo-select'), 'demo');
+    </script>
+  </body>
+</html>
+```
+
 ## User Guide
 ### Prerequisites / Pre-flight Checks
 1. This library actively prevents ID attribute collisions. When instantiating
