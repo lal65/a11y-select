@@ -317,11 +317,13 @@ export const a11ySelect = (native_select, unique_id) => {
   function closeCombobox(update_selection) {
     combobox.setAttribute('aria-expanded', 'false');
     if (update_selection) {
-      last_selected_option = selected_option = active_descendant;
-      observer.disconnect();
-      native_select.value = selected_option.getAttribute('data-native-option-value');
-      native_select.dispatchEvent(new Event('change'));
-      observer.observe(native_select, {attributes: true, childList: true, subtree: true, characterData: true});
+      if (last_selected_option !== active_descendant) {
+        last_selected_option = selected_option = active_descendant;
+        observer.disconnect();
+        native_select.value = selected_option.getAttribute('data-native-option-value');
+        native_select.dispatchEvent(new Event('change'));
+        observer.observe(native_select, {attributes: true, childList: true, subtree: true, characterData: true});
+      }
     }
     else {
       selected_option = last_selected_option;
