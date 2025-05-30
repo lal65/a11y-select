@@ -23,9 +23,9 @@ outside the documented expectations, expect breakages between releases.
 ```html
 <!DOCTYPE html>
 <html lang="en">
-  <meta charset="utf-8" />
-  <title>a11y-select | Basic Example</title>
   <head>
+    <meta charset="utf-8" />
+    <title>a11y-select | Basic Example</title>
     <link rel="stylesheet" href="dist/a11y-select.min.css">
   </head>
   <body>
