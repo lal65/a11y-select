@@ -133,6 +133,14 @@ export const a11ySelect = (native_select, unique_id) => {
   });
 
   function revalidate_options() {
+
+    if (native_select.hasAttribute('required')) {
+      combobox.setAttribute('aria-required', 'true');
+    }
+    else {
+      combobox.removeAttribute('aria-required');
+    }
+
     options = [];
     listbox.innerHTML = '';
     // Now we have to iterate over all the things inside the native select
@@ -322,6 +330,12 @@ export const a11ySelect = (native_select, unique_id) => {
         observer.disconnect();
         native_select.value = selected_option.getAttribute('data-native-option-value');
         native_select.dispatchEvent(new Event('change'));
+        if (combobox.getAttribute('aria-required') === 'true' && !last_selected_option.getAttribute('data-native-option-value')) {
+          combobox.setAttribute('aria-invalid', 'true');
+        }
+        else if (combobox.getAttribute('aria-invalid') === 'true') {
+          combobox.setAttribute('aria-invalid', 'false');
+        }
         observer.observe(native_select, {attributes: true, childList: true, subtree: true, characterData: true});
       }
     }
