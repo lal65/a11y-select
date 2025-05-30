@@ -584,3 +584,61 @@ describe('Optgroup Tests', () => {
     }
   });
 });
+
+describe('Dependent options', () => {
+  let driver;
+
+  before(async () => {
+    driver = await new Builder().withCapabilities({
+      'goog:loggingPrefs': { browser: 'ALL' },
+    }).forBrowser(Browser.CHROME).build();
+  })
+
+  after(async () => {
+    await driver.quit();
+  });
+
+
+  it('Should issue a warning when options are changed', async () => {
+    await driver.get(`http://bs-local.com/test/dependent-options.html`);
+    const a11y_select = await driver.findElement(By.css('.a11y-select'));
+    await driver.wait(until.elementIsVisible(a11y_select), 1000);
+
+    await driver.findElement(By.css('#option-set-selector [value="options2"]')).click();
+    await driver.sleep(1000);
+    const warnings = await driver.executeScript('return window.console.warnings');
+    assert.strictEqual(warnings.length, 1);
+    assert.strictEqual(warnings[0], 'The native select has been modified. Users may find this confusing.');
+  });
+
+  it('Should automatically rebuild dependent options correctly', async () => {
+    await driver.get(`http://bs-local.com/test/dependent-options.html`);
+    const a11y_select = await driver.findElement(By.css('.a11y-select'));
+    await driver.wait(until.elementIsVisible(a11y_select), 1000);
+
+    assert.strictEqual((await driver.findElements(By.css('[data-native-option-value="1"]'))).length, 1);
+    assert.strictEqual((await driver.findElements(By.css('[data-native-option-value="2"]'))).length, 1);
+    assert.strictEqual((await driver.findElements(By.css('[data-native-option-value="3"]'))).length, 1);
+    assert.strictEqual((await driver.findElements(By.css('[data-native-option-value="4"]'))).length, 0);
+    assert.strictEqual((await driver.findElements(By.css('[data-native-option-value="5"]'))).length, 0);
+    assert.strictEqual((await driver.findElements(By.css('[data-native-option-value="6"]'))).length, 0);
+
+    await driver.findElement(By.css('#option-set-selector [value="options2"]')).click();
+
+    assert.strictEqual((await driver.findElements(By.css('[data-native-option-value="1"]'))).length, 0);
+    assert.strictEqual((await driver.findElements(By.css('[data-native-option-value="2"]'))).length, 0);
+    assert.strictEqual((await driver.findElements(By.css('[data-native-option-value="3"]'))).length, 0);
+    assert.strictEqual((await driver.findElements(By.css('[data-native-option-value="4"]'))).length, 1);
+    assert.strictEqual((await driver.findElements(By.css('[data-native-option-value="5"]'))).length, 1);
+    assert.strictEqual((await driver.findElements(By.css('[data-native-option-value="6"]'))).length, 1);
+
+    await driver.findElement(By.css('#option-set-selector [value="options1"]')).click();
+
+    assert.strictEqual((await driver.findElements(By.css('[data-native-option-value="1"]'))).length, 1);
+    assert.strictEqual((await driver.findElements(By.css('[data-native-option-value="2"]'))).length, 1);
+    assert.strictEqual((await driver.findElements(By.css('[data-native-option-value="3"]'))).length, 1);
+    assert.strictEqual((await driver.findElements(By.css('[data-native-option-value="4"]'))).length, 0);
+    assert.strictEqual((await driver.findElements(By.css('[data-native-option-value="5"]'))).length, 0);
+    assert.strictEqual((await driver.findElements(By.css('[data-native-option-value="6"]'))).length, 0);
+  });
+});

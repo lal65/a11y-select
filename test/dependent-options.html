@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Demo</title>
+  <link rel="stylesheet" href="../dist/a11y-select.min.css" />
+</head>
+<body>
+<label>Select an option set
+  <select id="option-set-selector">
+    <option value="options1" selected>Option set 1</option>
+    <option value="options2">Option set 2</option>
+  </select>
+</label>
+<select id="a11y-select-demo">
+  <option value="">Select an option</option>
+  <option value="1" selected>Option 1</option>
+  <option value="2">Option 2</option>
+  <option value="3">Option 3</option>
+</select>
+<script type="module">
+  import {a11ySelect} from '../dist/a11y-select.min.mjs';
+  window.console = {
+    warnings: [],
+    warn: function(msg) { this.warnings.push(msg) },
+  };
+  document.getElementById('option-set-selector').addEventListener('change', e => {
+    if (e.target.value === 'options1') {
+      document.getElementById('a11y-select-demo').innerHTML = `
+  <option value="">Select an option</option>
+  <option value="1" selected>Option 1</option>
+  <option value="2">Option 2</option>
+  <option value="3">Option 3</option>
+      `;
+    }
+    else {
+      document.getElementById('a11y-select-demo').innerHTML = `
+  <option value="">Select an option</option>
+  <option value="4">Option 4</option>
+  <option value="5">Option 5</option>
+  <option value="6">Option 6</option>
+      `;
+    }
+  });
+  a11ySelect(document.querySelector('#a11y-select-demo'), 'demo');
+</script>
+</body>
+</html>
