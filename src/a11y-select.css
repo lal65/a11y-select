@@ -5,6 +5,10 @@
   --a11y-select-option-padding: 1rem 4rem 1rem 1rem;
 }
 
+.a11y-select {
+  position: relative;
+}
+
 .a11y-select__combobox {
   background: var(--a11y-select-combobox-background, color-mix(in srgb, #96bee6, #fff 60%));
   border-radius: var(--a11y-select-combobox-border-radius, .3125rem);
@@ -36,8 +40,10 @@
 
 .a11y-select__listbox {
   display: none;
-  position: relative;
+  position: absolute;
+  width: 100%;
   overflow: auto;
+  z-index: 1;
 
   background: var(--a11y-select-listbox-background, color-mix(in srgb, #96bee6, #fff 60%));
   border-radius: var(--a11y-select-listbox-border-radius, 0 0 .3125rem .3125rem);
