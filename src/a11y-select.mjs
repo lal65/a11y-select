@@ -40,6 +40,17 @@ export const a11ySelect = (native_select, unique_id) => {
     return;
   }
 
+  // Make sure that the native control has an accessible label.
+  let native_label = native_select.closest('label');
+  if (!native_label && native_select.hasAttribute('id')) {
+    native_label = document.querySelector('label[for="' + native_select.getAttribute('id') + '"]');
+  }
+
+  if (!native_label) {
+    console.error('Skipping a11y-select progressive enhancement due to lack of accessible label.');
+    return;
+  }
+
   // Next up, some run-time education...
 
   // Option groups have never really had good accessibility support. In
@@ -67,16 +78,8 @@ export const a11ySelect = (native_select, unique_id) => {
     className: 'a11y-select',
   });
 
-  // If there is a label wrapping the native select, move the entire label inside.
-  const wrapping_label = native_select.closest('label');
-  if (wrapping_label) {
-    wrapping_label.insertAdjacentElement('beforebegin', wrapping_element);
-    wrapping_element.appendChild(wrapping_label);
-  }
-  else {
-    native_select.insertAdjacentElement('beforebegin', wrapping_element);
-    wrapping_element.appendChild(native_select);
-  }
+  native_select.insertAdjacentElement('afterend', wrapping_element);
+  wrapping_element.appendChild(native_select);
 
   /**
    * This element is the combobox.
@@ -93,6 +96,19 @@ export const a11ySelect = (native_select, unique_id) => {
     ariaExpanded: 'false',
   });
   combobox.setAttribute('aria-controls', `a11y-select-${unique_id}--listbox`);
+
+  if (!native_label.hasAttribute('id')) {
+    native_label.setAttribute('id', `a11y-select-${unique_id}--combobox-label`);
+  }
+  combobox.setAttribute('aria-labelledby', native_label.getAttribute('id'));
+
+  if (native_select.hasAttribute('aria-describedby')) {
+    combobox.setAttribute('aria-describedby', native_select.getAttribute('aria-describedby'));
+  }
+
+  native_label.addEventListener('click', () => {
+    combobox.focus();
+  });
 
   /**
    * This is an element within the combobox used to display its current value.

@@ -6,20 +6,14 @@
     <link rel="stylesheet" href="../dist/a11y-select.min.css" />
   </head>
   <body>
-    <label for="a11y-select-demo">Demo</label>
+    <label for="a11y-select-demo" id="pre-existing-id">Demo</label>
     <select id="a11y-select-demo">
       <option value="">Select an option</option>
-      <optgroup label="Option group 1">
-        <option value="1" selected>Option 1</option>
-        <option value="2">Option 2</option>
-        <option value="3">Option 3</option>
-      </optgroup>
-      <optgroup label="Option group 2">
-        <option value="4">Option 4</option>
-        <option value="5">Option 5</option>
-        <option value="6">Option 6</option>
-      </optgroup>
+      <option value="1" selected>Option 1</option>
+      <option value="2">Option 2</option>
+      <option value="3">Option 3</option>
     </select>
+
     <script type="module">
       import {a11ySelect} from '../dist/a11y-select.min.mjs';
       a11ySelect(document.querySelector('#a11y-select-demo'), 'demo');

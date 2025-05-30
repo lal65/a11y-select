@@ -6,18 +6,15 @@
     <link rel="stylesheet" href="../dist/a11y-select.min.css" />
   </head>
   <body>
-    <label for="a11y-select-demo">Demo</label>
-    <select id="a11y-select-demo" disabled>
+    <label for="a11y-select-demo" id="pre-existing-id">Demo</label>
+    <select id="a11y-select-demo" aria-describedby="a11y-select-demo-more-context">
       <option value="">Select an option</option>
       <option value="1" selected>Option 1</option>
       <option value="2">Option 2</option>
       <option value="3">Option 3</option>
     </select>
+    <span id="a11y-select-demo-more-context">Select an option for the demo...you know you want to.</span>
     <script type="module">
-      window.console = {
-        errors: [],
-        error: function(msg) { this.errors.push(msg) },
-      };
       import {a11ySelect} from '../dist/a11y-select.min.mjs';
       a11ySelect(document.querySelector('#a11y-select-demo'), 'demo');
     </script>

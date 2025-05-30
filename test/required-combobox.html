@@ -7,18 +7,17 @@
   </head>
   <body>
     <form>
-      <label>Demo
-        <select class="a11y-select-demo" required>
-          <option value="">Select an option</option>
-          <option value="1" selected>Option 1</option>
-          <option value="2">Option 2</option>
-          <option value="3">Option 3</option>
-        </select>
-      </label>
+      <label for="a11y-select-demo">Demo</label>
+      <select id="a11y-select-demo" required>
+        <option value="">Select an option</option>
+        <option value="1" selected>Option 1</option>
+        <option value="2">Option 2</option>
+        <option value="3">Option 3</option>
+      </select>
     </form>
     <script type="module">
       import {a11ySelect} from '../dist/a11y-select.min.mjs';
-      a11ySelect(document.querySelector('.a11y-select-demo'), 'demo');
+      a11ySelect(document.querySelector('#a11y-select-demo'), 'demo');
     </script>
   </body>
 </html>

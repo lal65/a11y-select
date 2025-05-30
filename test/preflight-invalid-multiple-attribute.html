@@ -6,7 +6,8 @@
     <link rel="stylesheet" href="../dist/a11y-select.min.css" />
   </head>
   <body>
-    <select multiple class="a11y-select-demo">
+    <label for="a11y-select-demo">Demo</label>
+    <select multiple id="a11y-select-demo">
       <option value="">Select an option</option>
       <option value="1" selected>Option 1</option>
       <option value="2">Option 2</option>
@@ -18,7 +19,7 @@
         error: function(msg) { this.errors.push(msg) },
       };
       import {a11ySelect} from '../dist/a11y-select.min.mjs';
-      a11ySelect(document.querySelector('.a11y-select-demo'), 'demo');
+      a11ySelect(document.querySelector('#a11y-select-demo'), 'demo');
     </script>
   </body>
 </html>

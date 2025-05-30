@@ -60,6 +60,15 @@ describe('Preflight checks', () => {
     assert.strictEqual(errors[0], 'Skipping a11y-select progressive enhancement due to unsupported "disabled" attribute.');
   });
 
+  it('Will not attempt to progressively enhance unlabelled select elements', async () => {
+    await driver.get(`http://bs-local.com/test/preflight-label-missing.html`);
+    await driver.sleep(1000);
+    const errors = await driver.executeScript('return window.console.errors');
+    assert.strictEqual(errors.length, 1);
+    assert.strictEqual(errors[0], 'Skipping a11y-select progressive enhancement due to lack of accessible label.');
+
+  });
+
   xit('Will warn about the use of option groups on macOS', async () => {
     // @TODO: Implement test.
   });
@@ -620,6 +629,62 @@ describe('Dependent options', () => {
 
     await driver.executeScript('document.querySelector("#a11y-select-demo").removeAttribute("required")');
     assert.strictEqual(await combobox.getAttribute('aria-required'), null);
+
+  });
+});
+
+describe('Label association tests', () => {
+  let driver;
+
+  before(async () => {
+    driver = await new Builder().withCapabilities({
+      'goog:loggingPrefs': { browser: 'ALL' },
+    }).forBrowser(Browser.CHROME).build();
+  })
+
+  after(async () => {
+    await driver.quit();
+  });
+
+
+  it('Correctly assigns the aria-labelledby attribute when the native label is associated via the "for" attribute with a pre-existing ID', async () => {
+    await driver.get(`http://bs-local.com/test/label-association-for.html`);
+    const combobox = await driver.wait(until.elementLocated(By.css('.a11y-select__combobox')));
+    const label = await driver.wait(until.elementLocated(By.css('label')));
+
+    assert.strictEqual(await combobox.getAttribute('aria-labelledby'), 'pre-existing-id');
+  });
+
+  it('Correctly assigns the aria-labelledby attribute when the native label is associated via the "for" attribute without a pre-existing ID', async () => {
+    await driver.get(`http://bs-local.com/test/label-association-for-without-id.html`);
+    const combobox = await driver.wait(until.elementLocated(By.css('.a11y-select__combobox')));
+    const label = await driver.wait(until.elementLocated(By.css('label')));
+
+    assert.strictEqual(await combobox.getAttribute('aria-labelledby'), 'a11y-select-demo--combobox-label');
+  });
+
+  it('Correctly assigns the aria-labelledby attribute when the native label is associated via DOM inheritance', async () => {
+    await driver.get(`http://bs-local.com/test/label-association-implicit.html`);
+    const combobox = await driver.wait(until.elementLocated(By.css('.a11y-select__combobox')));
+    const label = await driver.wait(until.elementLocated(By.css('label')));
+
+    assert.strictEqual(await combobox.getAttribute('aria-labelledby'), await label.getAttribute('id'));
+  });
+
+  it('Correctly moves focus when the label element is clicked on', async () => {
+    await driver.get(`http://bs-local.com/test/label-association-implicit.html`);
+    const combobox = await driver.wait(until.elementLocated(By.css('.a11y-select__combobox')));
+    const label = await driver.wait(until.elementLocated(By.css('label')));
+
+    await label.click();
+    assert.strictEqual(await driver.switchTo().activeElement().getAttribute('id'), await combobox.getAttribute('id'));
+  });
+
+  it('Correctly associates the aria-describedby attribute', async () => {
+    await driver.get(`http://bs-local.com/test/label-association-describedby.html`);
+    const combobox = await driver.wait(until.elementLocated(By.css('.a11y-select__combobox')));
+
+    assert.strictEqual(await combobox.getAttribute('aria-describedby'), 'a11y-select-demo-more-context');
 
   });
 });
