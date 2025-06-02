@@ -110,19 +110,10 @@ export const a11ySelect = (native_select, unique_id) => {
     combobox.focus();
   });
 
-  /**
-   * This is an element within the combobox used to display its current value.
-   *
-   * @type {HTMLDivElement}
-   */
-  const combobox_value = Object.assign(document.createElement('div'), {
-    className: 'a11y-select__value',
-  });
-
-  // When the combobox value element is clicked, toggle the combobox state. If
+  // When the combobox element is clicked, toggle the combobox state. If
   // the new state is to be closed, the user selection is reverted to what it
   // previously was when they last opened it.
-  combobox_value.addEventListener('click', () => {
+  combobox.addEventListener('click', () => {
     if (combobox.getAttribute('aria-expanded') === 'true') {
       combobox.setAttribute('aria-expanded', 'false');
       combobox.removeAttribute('aria-activedescendant');
@@ -130,6 +121,15 @@ export const a11ySelect = (native_select, unique_id) => {
     else {
       combobox.setAttribute('aria-expanded', 'true');
     }
+  });
+
+  /**
+   * This is an element within the combobox used to display its current value.
+   *
+   * @type {HTMLDivElement}
+   */
+  const combobox_value = Object.assign(document.createElement('div'), {
+    className: 'a11y-select__value',
   });
 
   combobox.appendChild(combobox_value);

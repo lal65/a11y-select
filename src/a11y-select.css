@@ -41,7 +41,8 @@
 .a11y-select__listbox {
   display: none;
   position: absolute;
-  width: 100%;
+  left: 0;
+  right: 0;
   overflow: auto;
   z-index: 1;
 
