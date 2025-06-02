@@ -217,6 +217,7 @@ export const a11ySelect = (native_select, unique_id) => {
       const group_accessible_name = Object.assign(document.createElement('div'), {
         className: 'a11y-select__group-accessible-name',
         role: 'presentation',
+        tabindex: '-1',
         id: `a11y-select-${unique_id}--optgroup-${unique_counter}`,
         textContent: group.getAttribute('label'),
       });
