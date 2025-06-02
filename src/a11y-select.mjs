@@ -188,6 +188,7 @@ export const a11ySelect = (native_select, unique_id) => {
         className: `a11y-select__option${option.hasAttribute('selected') ? ' a11y-select__option--selected' : ''}`,
         id: `a11y-select-${unique_id}--option-${unique_counter}`,
         role: 'option',
+        tabIndex: '-1',
         ariaSelected: option.hasAttribute('selected') ? 'true' : 'false',
         textContent: option.textContent,
       });
