@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>a11y-select | Accessible, Modern, and Simple Customizable Select Elements</title>
   <link rel="icon" type="image/x-icon" href="/a11y-select/favicon.ico">
-  <link rel="stylesheet" href="/a11y-select.min.css" />
-  <link rel="stylesheet" href="/a11y-select-theme-default.min.css" />
+  <link rel="stylesheet" href="/a11y-select/a11y-select.min.css" />
+  <link rel="stylesheet" href="/a11y-select/a11y-select-theme-default.min.css" />
 </head>
 <body>
   <label for="demo-select">Demo Select</label>
@@ -41,7 +41,7 @@
     <option value="option-3">Option 3</option>
   </select>
   <script type="module">
-    import {a11ySelect} from '/a11y-select.min.mjs';
+    import {a11ySelect} from '/a11y-select/a11y-select.min.mjs';
 
     document.querySelectorAll('select').forEach(select => {
       a11ySelect(select, select.getAttribute('id'));
