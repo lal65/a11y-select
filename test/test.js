@@ -173,9 +173,8 @@ describe('Simple Tests', () => {
   it ('Opens with a mouse', async () => {
     await driver.get(`http://bs-local.com/test/simple.html`);
     const combobox = await driver.wait(until.elementLocated(By.css('.a11y-select__combobox')), 1000);
-    const combobox_value = await driver.findElement(By.css('.a11y-select__value'));
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'false');
-    await combobox_value.click();
+    await combobox.click();
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');
   });
 

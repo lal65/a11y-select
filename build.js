@@ -7,6 +7,10 @@ const CleanCSS = require('clean-css');
 fs.writeFileSync('./dist/a11y-select.min.css', new CleanCSS().minify(css).styles);
 fs.writeFileSync('./docs/a11y-select.min.css', new CleanCSS().minify(css).styles);
 
+const default_theme_css = fs.readFileSync('./src/a11y-select-theme-default.css', 'utf8');
+fs.writeFileSync('./dist/a11y-select-theme-default.min.css', new CleanCSS().minify(default_theme_css).styles);
+fs.writeFileSync('./docs/a11y-select-theme-default.min.css', new CleanCSS().minify(default_theme_css).styles);
+
 const js = fs.readFileSync('./src/a11y-select.mjs', 'utf8');
 const UglifyJS = require('uglify-js');
 fs.writeFileSync('./dist/a11y-select.min.mjs', UglifyJS.minify(js).code);

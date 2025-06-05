@@ -84,6 +84,148 @@ should be avoided and may lead to confusion.
 This library exposes a number of CSS custom properties which can be used to
 apply custom styling.
 
+### `--a11y-select-combobox-background`
+This forms the background of the combobox. It's recommended to add a decorative
+icon in the background that indicates to visual users that they can expand the
+combobox.
+
+### `--a11y-select-combobox-foreground`
+This is the text color of the combobox. Ensure at least a 3:1 contrast ratio
+against the chosen background color.
+
+### `--a11y-select-combobox-padding`
+Adjust the combobox padding. Ensure the tap area height of the combobox is at
+least 44px high to help meet touch target accessibility requirements.
+
+### `--a11y-select-combobox-border-radius`
+Customize the border radius of the combobox. There is another custom property
+that can be used to further refine the border radius only when the combobox is
+open.
+
+### `--a11y-select-combobox-expanded-border-radius`
+It is common to want to zero out the bottom-left and bottom-right border radii
+when the combobox is expanded.
+
+### `--a11y-select-combobox-box-shadow`
+Give the combobox a box shadow to hint visual users that activating the
+combobox will open a drop-down. It is recommended to add a similar, if
+not exactly the same, box shadow to the listbox element.
+
+### `--a11y-select-combobox-focus-visible-outline` (falls back to `revert`)
+Adjust the focus-visible indicator. Note that also adjusting the outline offset
+may be required to prevent the listbox from clipping the bottom edge of the
+focus indicator.
+
+### `--a11y-select-combobox-focus-visible-outline-offset`
+Adjust the offset of the focus-visible indicator. It is common to set this to
+a negative value to prevent the listbox from clipping the bottom edge of the
+focus indicator.
+
+### `--a11y-select-listbox-z-index` (falls back to  `1`)
+This z-index value is for the expandable panel. It should be set to a value
+greater than zero to ensure that subsequent a11y-select elements do not obscure
+one that may be expanded.
+
+### `--a11y-select-listbox-padding`
+Adjust the padding of the listbox.
+
+### `--a11y-select-listbox-background`
+This forms the background of the listbox. It's recommended to match the color
+of the combobox to ensure design consistency.
+
+### `--a11y-select-listbox-border-radius`
+Adjust the border radius of the listbox. If the combobox border radius is also
+customized, it's recommended to match the bottom-left and bottom-right
+property values here to add the visual illusion that the combobox expands
+rather than having an adjacent element simply appear.
+
+### `--a11y-select-listbox-box-shadow`
+Adjust the box shadow of the listbox. It's recommended to match the box shadow
+of the combobox.
+
+### `--a11y-select-listbox-max-height`
+Adjust the maximum height of the listbox. It is recommended that this value be
+based on the viewport height unit to ensure that the listbox options do not
+flow off-screen in ways that the user cannot interact with.
+
+### `--a11y-select-group-label-font`
+Adjust the font of group labels. It is recommended to visually bold this.
+
+### `--a11y-select-group-label-padding`
+Adjust the padding of group labels.
+
+### `--a11y-select-group-indent`
+Adjust the indentation of options within groups.
+
+### `--a11y-select-option-background`
+This forms the background of an option. It's recommended to match the color
+of the combobox to ensure design consistency. Additional properties exist
+for selected and hovered states. It's critical to provide visually distinct
+styles for each state.
+
+### `--a11y-select-option-foreground`
+This is the text color of an option. Ensure at least a 3:1 contrast ratio
+against the chosen option background color. Additional properties exist
+for selected and hovered states.
+
+### `--a11y-select-option-border-radius`
+Adjust the border radius of options.
+
+### `--a11y-select-option-padding`
+Adjust the padding of options. Ensure the tap area height of options is at
+least 44px high to help meet touch target accessibility requirements.
+
+### `--a11y-select-option-selected-background`
+This forms the background of an option when it is selected. It's recommended
+to add a decorative checkmark icon as part of the background to visually 
+indicate that the option is selected.
+
+### `--a11y-select-option-selected-foreground`
+This is the text color of an option. Ensure at least a 3:1 contrast ratio
+against the chosen selected option background color.
+
+### `--a11y-select-option-hovered-background-color`
+This adjusts the background color of an option when it is hovered over. Given
+that an option may be selected or not, only the background-color property is
+affected by this customization point.
+
+### `--a11y-select-option-hovered-foreground`
+This is the text color of an option. Ensure at least a 3:1 contrast ratio
+against the chosen hovered option background color.
+
+### `--a11y-select-option-active-descendant-outline`
+Adjust the active descendant indicator. Note that also adjusting the outline
+offset may be required to prevent the next option from clipping the bottom 
+edge of the active descendant indicator.
+
+### `--a11y-select-option-active-descendant-outline-offset`
+Adjust the offset of the active descendant indicator. It is common to set this
+to a negative value to prevent the next option from clipping the bottom edge of
+the active descendant indicator.
+
+#### Example: Default Theme
+The default a11y-select theme is quite simple.
+```css
+:root {
+  --a11y-select-combobox-background: ghostwhite;
+  --a11y-select-combobox-padding: 1rem;
+  --a11y-select-combobox-focus-visible-outline: .2rem solid black;
+  --a11y-select-combobox-focus-visible-outline-offset: -2px;
+  --a11y-select-listbox-background: ghostwhite;
+  --a11y-select-listbox-max-height: 50vh;
+  --a11y-select-listbox-padding: 1rem;
+  --a11y-select-group-label-padding: 1rem;
+  --a11y-select-group-indent: 1rem;
+  --a11y-select-option-padding: 1rem;
+  --a11y-select-option-background: ghostwhite;
+  --a11y-select-option-selected-background: lightskyblue;
+  --a11y-select-option-active-descendant-outline: .2rem solid black;
+  --a11y-select-option-active-descendant-outline-offset: -2px;
+  --a11y-select-option-hovered-background: navy;
+  --a11y-select-option-hovered-foreground: white;
+}
+```
+
 #### Unsupported customizations
 The internal HTML structure that is generated by this library is not subject
 to backwards-compatibility guarantees. Given the nature of assistive technology

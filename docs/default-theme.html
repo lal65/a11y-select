@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>a11y-select | Accessible, Modern, and Simple Customizable Select Elements</title>
+  <link rel="icon" type="image/x-icon" href="/a11y-select/favicon.ico">
+  <link rel="stylesheet" href="/docs/a11y-select.min.css" />
+  <link rel="stylesheet" href="/docs/a11y-select-theme-default.min.css" />
+</head>
+<body>
+  <label for="demo-select">Demo Select</label>
+  <select id="demo-select">
+    <option value="">Select an option</option>
+    <option value="option-1">Option 1</option>
+    <option value="option-2">Option 2</option>
+    <option value="option-3">Option 3</option>
+    <option value="option-4">This is an exceptionally long option that will eventually span to multiple lines. This is an exceptionally long option that will eventually span to multiple lines. This is an exceptionally long option that will eventually span to multiple lines.</option>
+  </select>
+  <br>
+  <label for="demo-select-grouped">Demo Select</label>
+  <select id="demo-select-grouped">
+    <option value="">Select an option</option>
+    <optgroup label="Group 1">
+      <option value="option-1">Option 1</option>
+      <option value="option-2">Option 2</option>
+      <option value="option-3">Option 3</option>
+    </optgroup>
+    <optgroup label="Group 2">
+      <option value="option-4">Option 4</option>
+      <option value="option-5">Option 5</option>
+      <option value="option-6">Option 6</option>
+    </optgroup>
+  </select>
+  <br>
+  <label for="demo-select-required">Demo Select (required)</label>
+  <select id="demo-select-required" required>
+    <option value="">Select an option</option>
+    <option value="option-1">Option 1</option>
+    <option value="option-2">Option 2</option>
+    <option value="option-3">Option 3</option>
+  </select>
+  <script type="module">
+    import {a11ySelect} from '/docs/a11y-select.min.mjs';
+
+    document.querySelectorAll('select').forEach(select => {
+      a11ySelect(select, select.getAttribute('id'));
+    });
+  </script>
+</body>
+</html>

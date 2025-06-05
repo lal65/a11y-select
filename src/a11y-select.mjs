@@ -124,17 +124,6 @@ export const a11ySelect = (native_select, unique_id) => {
   });
 
   /**
-   * This is an element within the combobox used to display its current value.
-   *
-   * @type {HTMLDivElement}
-   */
-  const combobox_value = Object.assign(document.createElement('div'), {
-    className: 'a11y-select__value',
-  });
-
-  combobox.appendChild(combobox_value);
-
-  /**
    * This element is the listbox that is controlled by the combobox.
    *
    * @type {HTMLDivElement}
@@ -215,7 +204,7 @@ export const a11ySelect = (native_select, unique_id) => {
      */
     function create_combobox_group(group, unique_counter) {
       const group_accessible_name = Object.assign(document.createElement('div'), {
-        className: 'a11y-select__group-accessible-name',
+        className: 'a11y-select__group-label',
         role: 'presentation',
         tabindex: '-1',
         id: `a11y-select-${unique_id}--optgroup-${unique_counter}`,
@@ -251,7 +240,7 @@ export const a11ySelect = (native_select, unique_id) => {
     active_descendant = last_selected_option = selected_option = listbox.querySelector('[aria-selected="true"]') ?? options[0];
     selected_option?.setAttribute('aria-selected', 'true');
     selected_option?.classList.add('a11y-select__option--selected');
-    combobox_value.textContent = selected_option?.textContent;
+    combobox.textContent = selected_option?.textContent;
   }
 
   /**
@@ -389,7 +378,7 @@ export const a11ySelect = (native_select, unique_id) => {
       combobox.setAttribute('aria-activedescendant', active_descendant.getAttribute('id'));
     }
 
-    combobox_value.textContent = selected_option.textContent;
+    combobox.textContent = selected_option.textContent;
 
     combobox.removeAttribute('aria-busy');
   }
@@ -552,7 +541,6 @@ export const a11ySelect = (native_select, unique_id) => {
   // the native select element will have the same styling as the combobox.
   // That would make for a zero-layout-shift replacement.
   requestAnimationFrame(() => {
-    native_select.style.display = 'none';
     wrapping_element.appendChild(combobox);
     wrapping_element.appendChild(listbox);
     observer.observe(native_select, {attributes: true, childList: true, subtree: true, characterData: true});
