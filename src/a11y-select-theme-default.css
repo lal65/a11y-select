@@ -13,6 +13,6 @@
   --a11y-select-option-selected-background: lightskyblue;
   --a11y-select-option-active-descendant-outline: 2px solid black;
   --a11y-select-option-active-descendant-outline-offset: -2px;
-  --a11y-select-option-hovered-background: navy;
+  --a11y-select-option-hovered-background-color: navy;
   --a11y-select-option-hovered-foreground: white;
 }
