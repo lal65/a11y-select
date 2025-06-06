@@ -15,6 +15,11 @@
   padding: var(--a11y-select-combobox-padding);
 }
 
+.a11y-select__combobox[aria-invalid="true"] {
+  outline: var(--a11y-select-combobox-invalid-outline);
+  outline-offset: var(--a11y-select-combobox-invalid-outline-offset);
+}
+
 .a11y-select__combobox[aria-expanded="true"] {
   border-radius: var(--a11y-select-combobox-expanded-border-radius);
 }

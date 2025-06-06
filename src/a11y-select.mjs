@@ -336,7 +336,7 @@ export const a11ySelect = (native_select, unique_id) => {
         observer.disconnect();
         native_select.value = selected_option.getAttribute('data-native-option-value');
         native_select.dispatchEvent(new Event('change'));
-        if (combobox.getAttribute('aria-required') === 'true' && !last_selected_option.getAttribute('data-native-option-value')) {
+        if (!native_select.reportValidity()) {
           combobox.setAttribute('aria-invalid', 'true');
         }
         else if (combobox.getAttribute('aria-invalid') === 'true') {
