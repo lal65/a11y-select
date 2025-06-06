@@ -545,7 +545,4 @@ export const a11ySelect = (native_select, unique_id) => {
     observer.observe(native_select, {attributes: true, attributeFilter: ['aria-describedby', 'id', 'required'],  childList: true, subtree: true, characterData: true});
   });
 
-  setInterval(() => {
-    native_select.className += 'uhoh';
-  }, 1000);
 };
