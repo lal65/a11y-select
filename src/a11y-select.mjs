@@ -115,11 +115,10 @@ export const a11ySelect = (native_select, unique_id) => {
   // previously was when they last opened it.
   combobox.addEventListener('click', () => {
     if (combobox.getAttribute('aria-expanded') === 'true') {
-      combobox.setAttribute('aria-expanded', 'false');
-      combobox.removeAttribute('aria-activedescendant');
+      closeCombobox(false);
     }
     else {
-      combobox.setAttribute('aria-expanded', 'true');
+      openCombobox();
     }
   });
 

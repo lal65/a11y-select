@@ -10,10 +10,10 @@
     <style>
       :root {
         /* Combobox at-rest styles */
-        --a11y-select-combobox-background: color-mix(in srgb, #96bee6, #fff 60%) url('data:image/svg+xml,<svg viewBox="0 0 13.18246 8" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M 6.0789337,7.7878096 0.21221033,1.9210554 c -0.28294711,-0.2829465 -0.28294711,-0.7416758 0,-1.02459275 L 0.89647062,0.21220341 C 1.1789345,-0.07026083 1.636726,-0.0708042 1.919855,0.21099579 L 6.5912534,4.8605021 11.2626,0.21099586 c 0.283139,-0.28180004 0.740934,-0.28125667 1.023377,0.001208 l 0.68427,0.68425917 c 0.282951,0.28294707 0.282951,0.74167527 0,1.02459277 l -5.8666887,5.866754 c -0.2829423,0.2829205 -0.7416787,0.2829205 -1.0246246,-2e-7 z" style="stroke-width:0.0301861" /></svg>') no-repeat calc(100% - .8rem) center / auto 0.8rem;
-        --a11y-select-combobox-foreground: #1e407c;
+        --a11y-select-combobox-background: color-mix(in srgb, var(--pugh-blue), var(--white) 60%) url('data:image/svg+xml,<svg viewBox="0 0 13.18246 8" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M 6.0789337,7.7878096 0.21221033,1.9210554 c -0.28294711,-0.2829465 -0.28294711,-0.7416758 0,-1.02459275 L 0.89647062,0.21220341 C 1.1789345,-0.07026083 1.636726,-0.0708042 1.919855,0.21099579 L 6.5912534,4.8605021 11.2626,0.21099586 c 0.283139,-0.28180004 0.740934,-0.28125667 1.023377,0.001208 l 0.68427,0.68425917 c 0.282951,0.28294707 0.282951,0.74167527 0,1.02459277 l -5.8666887,5.866754 c -0.2829423,0.2829205 -0.7416787,0.2829205 -1.0246246,-2e-7 z" style="stroke-width:0.0301861" /></svg>') no-repeat calc(100% - .8rem) center / auto 0.8rem;
+        --a11y-select-combobox-foreground: var(--beaver-blue);
         --a11y-select-combobox-border-radius: .3125rem;
-        --a11y-select-combobox-box-shadow: color-mix(in srgb, #314d64 55%, #fff) 0 .0625rem 0;
+        --a11y-select-combobox-box-shadow: color-mix(in srgb, var(--slate) 55%, var(--white)) 0 .0625rem 0;
         --a11y-select-combobox-native-focus-visible-outline: none;
         --a11y-select-combobox-padding: 1rem 2.8rem 1rem .625rem;
 
@@ -21,39 +21,51 @@
         --a11y-select-combobox-expanded-border-radius: .3125rem .3125rem 0 0;
 
         /* Combobox focus styles */
-        --a11y-select-combobox-focus-visible-outline: .2rem solid #009cde;
+        --a11y-select-combobox-focus-visible-outline: .2rem solid var(--sky-blue);
         --a11y-select-combobox-focus-visible-outline-offset: -.2rem;
 
         /* Listbox styles */
         --a11y-select-listbox-z-index: 1;
-        --a11y-select-listbox-background: color-mix(in srgb, #96bee6, #fff 60%);
+        --a11y-select-listbox-background: color-mix(in srgb, var(--pugh-blue), var(--white) 60%);
         --a11y-select-listbox-border-radius: 0 0 .3125rem .3125rem;
-        --a11y-select-listbox-box-shadow: color-mix(in srgb, #314d64 55%, #fff) 0 .0625rem 0;
-        --a11y-select-listbox-max-height: min(39rem, 50vh - 6rem);
+        --a11y-select-listbox-box-shadow: color-mix(in srgb, var(--slate) 55%, var(--white)) 0 .0625rem 0;
+        --a11y-select-listbox-max-height: min(49rem, 70vh - 6rem);
         --a11y-select-listbox-padding: .5rem 1rem 1rem 1rem;
 
         /* Group styles */
-        --a11y-select-group-label-font: bold;
-        --a11y-select-group-label-padding: .3125rem .3125rem .3125rem 0;
+        --a11y-select-group-label-font: var(--font-weight--bold) 1.7rem var(--font-family--default);
+        --a11y-select-group-label-padding: .5rem .5rem .5rem 0;
         --a11y-select-group-indent: 1rem;
 
         /* Option styles */
         --a11y-select-option-border-radius: 0;
-        --a11y-select-option-padding: .5rem 1rem;
-        --a11y-select-option-background: color-mix(in srgb, #96bee6, #fff 60%);
-        --a11y-select-option-foreground: #001e44;
+        --a11y-select-option-padding: 1rem;
+        --a11y-select-option-background: color-mix(in srgb, var(--pugh-blue), var(--white) 60%);
+        --a11y-select-option-foreground: var(--nittany-navy);
 
         /* Selected option styles */
-        --a11y-select-option-selected-background: #1e407c;
-        --a11y-select-option-selected-foreground: #fff;
+        --a11y-select-option-selected-background: var(--beaver-blue);
+        --a11y-select-option-selected-foreground: var(--white);
 
-        /* Active option styles */
-        --a11y-select-option-active-descendant-outline: .2rem solid #009cde;
+        /* Active descendant styles */
+        --a11y-select-option-active-descendant-background: color-mix(in srgb, var(--pugh-blue), var(--white) 60%);
+        --a11y-select-option-active-descendant-foreground: var(--nittany-navy);
+        --a11y-select-option-active-descendant-outline: .2rem solid var(--pa-link);
         --a11y-select-option-active-descendant-outline-offset: -.5rem;
 
+        /* Active descendant styles for selected option */
+        --a11y-select-option-active-descendant-selected-background: var(--nittany-navy);
+        --a11y-select-option-active-descendant-selected-foreground: var(--white);
+        --a11y-select-option-active-descendant-selected-outline: .2rem solid var(--sky-blue);
+        --a11y-select-option-active-descendant-selected-outline-offset: -.5rem;
+
         /* Hover option styles */
-        --a11y-select-option-hovered-background-color: #001e44;
-        --a11y-select-option-hovered-foreground: #fff;
+        --a11y-select-option-hovered-background-color: var(--nittany-navy);
+        --a11y-select-option-hovered-foreground: var(--white);
+
+        /* Hover active descendant styles */
+        --a11y-select-option-active-descendant-hovered-outline: .2rem solid var(--sky-blue);
+        --a11y-select-option-active-descendant-hovered-outline-offset: -.5rem;
       }
     </style>
     <link rel="stylesheet" href="https://test.student.worldcampus.psu.edu/themes/contrib/ooe/upstream-components/base/dist/styles.css" />

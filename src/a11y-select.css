@@ -70,11 +70,25 @@
 }
 
 .a11y-select__option--active-descendant {
+  background: var(--a11y-select-option-active-descendant-background);
+  color: var(--a11y-select-option-active-descendant-foreground);
   outline: var(--a11y-select-option-active-descendant-outline);
   outline-offset: var(--a11y-select-option-active-descendant-outline-offset);
+}
+
+.a11y-select__option--selected.a11y-select__option--active-descendant {
+  background: var(--a11y-select-option-active-descendant-selected-background);
+  color: var(--a11y-select-option-active-descendant-selected-foreground);
+  outline: var(--a11y-select-option-active-descendant-selected-outline);
+  outline-offset: var(--a11y-select-option-active-descendant-selected-outline-offset);
 }
 
 .a11y-select__option:hover {
   background-color: var(--a11y-select-option-hovered-background-color);
   color: var(--a11y-select-option-hovered-foreground);
+}
+
+.a11y-select__option--active-descendant:hover {
+  outline: var(--a11y-select-option-active-descendant-hovered-outline);
+  outline-offset: var(--a11y-select-option-active-descendant-hovered-outline-offset);
 }
