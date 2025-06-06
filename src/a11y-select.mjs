@@ -346,7 +346,7 @@ export const a11ySelect = (native_select, unique_id) => {
       }
     }
     else {
-      selected_option = last_selected_option;
+      active_descendant = selected_option = last_selected_option;
     }
     revalidateState();
     combobox.removeAttribute('aria-activedescendant');
