@@ -136,14 +136,16 @@ export const a11ySelect = (native_select, unique_id) => {
     tabIndex: '-1',
   });
 
-  function revalidate_options() {
-
+  function revalidate_attributes() {
     if (native_select.hasAttribute('required')) {
       combobox.setAttribute('aria-required', 'true');
     }
     else {
       combobox.removeAttribute('aria-required');
     }
+  }
+
+  function revalidate_options() {
 
     options = [];
     listbox.innerHTML = '';
@@ -336,16 +338,19 @@ export const a11ySelect = (native_select, unique_id) => {
         observer.disconnect();
         native_select.value = selected_option.getAttribute('data-native-option-value');
         native_select.dispatchEvent(new Event('change'));
-        if (!native_select.reportValidity()) {
+        if (!native_select.checkValidity()) {
           combobox.setAttribute('aria-invalid', 'true');
         }
         else if (combobox.getAttribute('aria-invalid') === 'true') {
           combobox.setAttribute('aria-invalid', 'false');
         }
-        observer.observe(native_select, {attributes: true, attributeFilter: ['aria-describedby', 'id', 'required'], childList: true, subtree: true, characterData: true});
+        observer.observe(native_select, {attributes: true, attributeFilter: ['required'], childList: true, subtree: true, characterData: true});
       }
     }
     else {
+      if (combobox.hasAttribute('aria-invalid') && !native_select.checkValidity()) {
+        combobox.setAttribute('aria-invalid', 'true');
+      }
       active_descendant = selected_option = last_selected_option;
     }
     revalidateState();
@@ -528,12 +533,22 @@ export const a11ySelect = (native_select, unique_id) => {
   });
 
   const observer = new MutationObserver(function(mutations) {
-    console.warn('The native select has been modified. Users may find this confusing.');
-    observer.disconnect();
-    revalidate_options();
-    observer.observe(native_select, {attributes: true, attributeFilter: ['aria-describedby', 'id', 'required'], childList: true, subtree: true, characterData: true});
-  });
 
+    observer.disconnect();
+    let revalidated_attributes = false, revalidated_options = false;
+    for (const mutation of mutations) {
+      if (!revalidated_attributes && mutation.type === 'attributes') {
+        revalidate_attributes();
+        revalidated_attributes = true;
+      }
+      else if (!revalidated_options) {
+        console.warn('The native select has been modified. Users may find this confusing.');
+        revalidate_options();
+      }
+    }
+    observer.observe(native_select, {attributes: true, attributeFilter: ['required'], childList: true, subtree: true, characterData: true});
+  });
+  revalidate_attributes();
   revalidate_options();
 
   // Finally, swap out the native select element with the new one.  Ideally,
@@ -542,7 +557,7 @@ export const a11ySelect = (native_select, unique_id) => {
   requestAnimationFrame(() => {
     wrapping_element.appendChild(combobox);
     wrapping_element.appendChild(listbox);
-    observer.observe(native_select, {attributes: true, attributeFilter: ['aria-describedby', 'id', 'required'],  childList: true, subtree: true, characterData: true});
+    observer.observe(native_select, {attributes: true, attributeFilter: ['required'],  childList: true, subtree: true, characterData: true});
   });
 
 };
