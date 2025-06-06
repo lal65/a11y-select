@@ -544,6 +544,7 @@ export const a11ySelect = (native_select, unique_id) => {
       else if (!revalidated_options) {
         console.warn('The native select has been modified. Users may find this confusing.');
         revalidate_options();
+        revalidated_options = true;
       }
     }
     observer.observe(native_select, {attributes: true, attributeFilter: ['required'], childList: true, subtree: true, characterData: true});
