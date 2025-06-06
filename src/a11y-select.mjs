@@ -342,7 +342,7 @@ export const a11ySelect = (native_select, unique_id) => {
         else if (combobox.getAttribute('aria-invalid') === 'true') {
           combobox.setAttribute('aria-invalid', 'false');
         }
-        observer.observe(native_select, {attributes: true, childList: true, subtree: true, characterData: true});
+        observer.observe(native_select, {attributes: true, attributeFilter: ['aria-describedby', 'id', 'required'], childList: true, subtree: true, characterData: true});
       }
     }
     else {
@@ -527,11 +527,11 @@ export const a11ySelect = (native_select, unique_id) => {
 
   });
 
-  const observer = new MutationObserver(function() {
+  const observer = new MutationObserver(function(mutations) {
     console.warn('The native select has been modified. Users may find this confusing.');
     observer.disconnect();
     revalidate_options();
-    observer.observe(native_select, {attributes: true, childList: true, subtree: true, characterData: true});
+    observer.observe(native_select, {attributes: true, attributeFilter: ['aria-describedby', 'id', 'required'], childList: true, subtree: true, characterData: true});
   });
 
   revalidate_options();
@@ -542,7 +542,10 @@ export const a11ySelect = (native_select, unique_id) => {
   requestAnimationFrame(() => {
     wrapping_element.appendChild(combobox);
     wrapping_element.appendChild(listbox);
-    observer.observe(native_select, {attributes: true, childList: true, subtree: true, characterData: true});
+    observer.observe(native_select, {attributes: true, attributeFilter: ['aria-describedby', 'id', 'required'],  childList: true, subtree: true, characterData: true});
   });
 
+  setInterval(() => {
+    native_select.className += 'uhoh';
+  }, 1000);
 };
