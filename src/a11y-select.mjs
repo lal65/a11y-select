@@ -143,6 +143,13 @@ export const a11ySelect = (native_select, unique_id) => {
     else {
       combobox.removeAttribute('aria-required');
     }
+    const described_by = native_select.hasAttribute('aria-describedby');
+    if (described_by) {
+      combobox.setAttribute('aria-describedby', described_by);
+    }
+    else {
+      combobox.removeAttribute('aria-describedby');
+    }
   }
 
   function revalidate_options() {
@@ -344,7 +351,7 @@ export const a11ySelect = (native_select, unique_id) => {
         else if (combobox.getAttribute('aria-invalid') === 'true') {
           combobox.setAttribute('aria-invalid', 'false');
         }
-        observer.observe(native_select, {attributes: true, attributeFilter: ['required'], childList: true, subtree: true, characterData: true});
+        observer.observe(native_select, {attributes: true, attributeFilter: ['required', 'aria-describedby'], childList: true, subtree: true, characterData: true});
       }
     }
     else {
@@ -548,7 +555,7 @@ export const a11ySelect = (native_select, unique_id) => {
         revalidated_options = true;
       }
     }
-    observer.observe(native_select, {attributes: true, attributeFilter: ['required'], childList: true, subtree: true, characterData: true});
+    observer.observe(native_select, {attributes: true, attributeFilter: ['required', 'aria-describedby'], childList: true, subtree: true, characterData: true});
   });
   revalidate_attributes();
   revalidate_options();
@@ -559,7 +566,7 @@ export const a11ySelect = (native_select, unique_id) => {
   requestAnimationFrame(() => {
     wrapping_element.appendChild(combobox);
     wrapping_element.appendChild(listbox);
-    observer.observe(native_select, {attributes: true, attributeFilter: ['required'],  childList: true, subtree: true, characterData: true});
+    observer.observe(native_select, {attributes: true, attributeFilter: ['required', 'aria-describedby'],  childList: true, subtree: true, characterData: true});
   });
 
 };
