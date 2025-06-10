@@ -393,6 +393,7 @@ export const a11ySelect = (native_select, unique_id) => {
     if (combobox.getAttribute('aria-expanded') === 'true' && !combobox.nextElementSibling.contains(e.relatedTarget)) {
       closeCombobox(false);
     }
+    combobox.setAttribute('aria-invalid', native_select.checkValidity() ? 'false' : 'true');
   });
 
   // React to a pile of keydown events.
