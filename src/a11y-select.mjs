@@ -143,9 +143,8 @@ export const a11ySelect = (native_select, unique_id) => {
     else {
       combobox.removeAttribute('aria-required');
     }
-    const described_by = native_select.hasAttribute('aria-describedby');
-    if (described_by) {
-      combobox.setAttribute('aria-describedby', described_by);
+    if (native_select.hasAttribute('aria-describedby')) {
+      combobox.setAttribute('aria-describedby', native_select.getAttribute('aria-describedby'));
     }
     else {
       combobox.removeAttribute('aria-describedby');
