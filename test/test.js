@@ -137,6 +137,14 @@ describe('Simple Tests', () => {
     assert.strictEqual(await combobox.getAttribute('aria-required'), 'true');
   });
 
+  it('Will have aria-invalid appropriately mapped from the native select', async () => {
+    await driver.get(`http://bs-local.com/test/required-combobox-default-invalid.html`);
+    const a11y_select = await driver.findElement(By.css('.a11y-select'));
+    await driver.wait(until.elementIsVisible(a11y_select), 1000);
+    const combobox = await driver.findElement(By.css('.a11y-select__combobox'));
+    assert.strictEqual(await combobox.getAttribute('aria-invalid'), 'true');
+  });
+
   it('Will appropriately trigger aria-invalid', async () => {
     await driver.get(`http://bs-local.com/test/required-combobox.html`);
     const a11y_select = await driver.findElement(By.css('.a11y-select'));
@@ -148,7 +156,7 @@ describe('Simple Tests', () => {
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
     await combobox.sendKeys(Key.ENTER);
     await driver.findElement(By.css('#a11y-select-demo--option-3')).click();
-    assert.strictEqual(await combobox.getAttribute('aria-invalid'), null);
+    assert.strictEqual(await combobox.getAttribute('aria-invalid'), 'false');
 
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
     await combobox.sendKeys(Key.ENTER);

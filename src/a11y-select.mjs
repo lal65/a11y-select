@@ -106,6 +106,10 @@ export const a11ySelect = (native_select, unique_id) => {
     combobox.setAttribute('aria-describedby', native_select.getAttribute('aria-describedby'));
   }
 
+  if (native_select.getAttribute('aria-invalid') === 'true') {
+    combobox.setAttribute('aria-invalid', 'true');
+  }
+
   native_label.addEventListener('click', () => {
     combobox.focus();
   });
