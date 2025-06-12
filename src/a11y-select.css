@@ -13,6 +13,7 @@
   box-shadow: var(--a11y-select-combobox-box-shadow);
   color: var(--a11y-select-combobox-foreground);
   padding: var(--a11y-select-combobox-padding);
+  font: var(--a11y-select-combobox-font);
 }
 
 .a11y-select__combobox[aria-invalid="true"] {
