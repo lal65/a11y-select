@@ -10,9 +10,18 @@
   --a11y-select-group-indent: 16px;
   --a11y-select-option-padding: 16px;
   --a11y-select-option-background: ghostwhite;
+
   --a11y-select-option-selected-background: lightskyblue;
+
   --a11y-select-option-active-descendant-outline: 2px solid black;
   --a11y-select-option-active-descendant-outline-offset: -2px;
+  --a11y-select-option-active-descendant-selected-background: lightskyblue;
+  --a11y-select-option-active-descendant-selected-outline: 2px solid black;
+  --a11y-select-option-active-descendant-selected-outline-offset: -2px;
+
   --a11y-select-option-hovered-background-color: navy;
   --a11y-select-option-hovered-foreground: white;
+
+  --a11y-select-option-active-descendant-hovered-outline: 2px solid lightskyblue;
+  --a11y-select-option-active-descendant-hovered-outline-offset: -4px;
 }
