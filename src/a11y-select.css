@@ -67,6 +67,7 @@
   background: var(--a11y-select-option-background);
   color: var(--a11y-select-option-foreground);
   border-radius: var(--a11y-select-option-border-radius);
+  font: var(--a11y-select-option-font);
   padding: var(--a11y-select-option-padding);
 }
 

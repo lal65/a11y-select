@@ -93,6 +93,9 @@ combobox.
 This is the text color of the combobox. Ensure at least a 3:1 contrast ratio
 against the chosen background color.
 
+### `--a11y-select-combobox-font`
+This property controls the font family, size, weight, style, etc...of the combobox.
+
 ### `--a11y-select-combobox-padding`
 Adjust the combobox padding. Ensure the tap area height of the combobox is at
 least 44px high to help meet touch target accessibility requirements.
@@ -157,6 +160,9 @@ Adjust the padding of group labels.
 ### `--a11y-select-group-indent`
 Adjust the indentation of options within groups.
 
+### `--a11y-select-option-font`
+This property controls the font family, size, weight, style, etc...of options.
+
 ### `--a11y-select-option-background`
 This forms the background of an option. It's recommended to match the color
 of the combobox to ensure design consistency. Additional properties exist
@@ -202,6 +208,56 @@ edge of the active descendant indicator.
 Adjust the offset of the active descendant indicator. It is common to set this
 to a negative value to prevent the next option from clipping the bottom edge of
 the active descendant indicator.
+
+### `--a11y-select-combobox-invalid-outline`
+Adjust the combobox outline when in error state. This acts as a visual
+indicator for the `aria-invalid` attribute.
+
+Note that the `--a11y-select-combobox-focus-visible-outline` focus indicator
+takes precedence.
+
+### `--a11y-select-combobox-invalid-outline-offset`
+Adjust the offset of the error state outline.
+
+### `--a11y-select-option-active-descendant-background`
+Adjust the background of the current active descendant.
+
+### `--a11y-select-option-active-descendant-foreground`
+Adjust the foreground of the current active descendant.
+
+### `--a11y-select-option-active-descendant-selected-background`
+Adjust the background of the currently selected active descendant.
+
+Note this takes precedence over the
+`--a11y-select-option-active-descendant-background` property, but
+not the `--a11y-select-option-hovered-background` property.
+
+### `--a11y-select-option-active-descendant-selected-foreground`
+Adjust the foreground of the currently selected active descendant.
+
+Note this takes precedence over the
+`--a11y-select-option-active-descendant-foreground` property, but not the
+`--a11y-select-option-hovered-foreground` property.
+
+### `--a11y-select-option-active-descendant-selected-outline`
+Adjust the outline of the currently selected active descendant.
+
+Note this takes precedence over the
+`--a11y-select-option-active-descendant-outline` property, but not the
+`--a11y-select-option-active-descendant-hovered-outline` property.
+
+### `--a11y-select-option-active-descendant-selected-outline-offset`
+Adjust the outline-offset of the currently selected active descendant.
+ Note this takes precedence over the
+`--a11y-select-option-active-descendant-outline-offset` property, but not the
+`--a11y-select-option-active-descendant-hovered-outline-offset` property.
+
+### `--a11y-select-option-active-descendant-hovered-outline`
+Adjust the outline of the active descendant hover state.
+
+### `--a11y-select-option-active-descendant-hovered-outline-offset`
+Adjust the outline-offset of the active descendant hover state.
+
 
 #### Example: Default Theme
 The default a11y-select theme is quite simple.
