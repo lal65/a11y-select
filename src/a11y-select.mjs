@@ -346,7 +346,6 @@ export const a11ySelect = (native_select, unique_id) => {
     if (update_selection) {
       if (last_selected_option !== active_descendant) {
         last_selected_option = selected_option = active_descendant;
-        observer.disconnect();
         native_select.value = selected_option.getAttribute('data-native-option-value');
         native_select.dispatchEvent(new Event('change'));
         if (!native_select.checkValidity()) {
@@ -355,7 +354,6 @@ export const a11ySelect = (native_select, unique_id) => {
         else if (combobox.getAttribute('aria-invalid') === 'true') {
           combobox.setAttribute('aria-invalid', 'false');
         }
-        observer.observe(native_select, {attributes: true, attributeFilter: ['required', 'aria-describedby'], childList: true, subtree: true, characterData: true});
       }
     }
     else {
