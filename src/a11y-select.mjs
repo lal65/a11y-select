@@ -361,7 +361,7 @@ export const a11ySelect = (native_select, unique_id) => {
       if (combobox.hasAttribute('aria-invalid') && !native_select.checkValidity()) {
         combobox.setAttribute('aria-invalid', 'true');
       }
-      active_descendant = selected_option = last_selected_option;
+      selected_option = last_selected_option;
     }
     revalidateState();
     combobox.removeAttribute('aria-activedescendant');
@@ -552,7 +552,7 @@ export const a11ySelect = (native_select, unique_id) => {
         revalidate_attributes();
         revalidated_attributes = true;
       }
-      else if (!revalidated_options) {
+      else if (!revalidated_options && mutation.type !== 'attributes') {
         console.warn('The native select has been modified. Users may find this confusing.');
         revalidate_options();
         revalidated_options = true;
