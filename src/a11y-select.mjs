@@ -427,6 +427,7 @@ export const a11ySelect = (native_select, unique_id) => {
     // currently closed: it should be opened.  If the combobox is currently
     // open: it should be closed and the user selection should be persisted.
     else if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
       if (combobox.getAttribute('aria-expanded') === 'true') {
         closeCombobox(true);
       }
