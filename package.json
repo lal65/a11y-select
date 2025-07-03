@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "A modern, accessible, and simple implementation of a themable select-only combobox.",
   "scripts": {
+    "lint": "eslint",
     "test": "mocha",
     "build": "node build.js",
     "test-browserstack": "browserstack-node-sdk mocha",
