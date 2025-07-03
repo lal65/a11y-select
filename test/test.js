@@ -488,7 +488,7 @@ describe('Search tests', () => {
     await driver.get(`http://bs-local.com/test/search.html`);
     const combobox = await driver.wait(until.elementLocated(By.css('.a11y-select__combobox')), 1000);
     await driver.executeScript(`document.querySelector('.a11y-select__combobox').focus();`);
-    combobox.sendKeys('a');
+    combobox.sendKeys('app');
     const listbox = await driver.findElement(By.css('.a11y-select__listbox'));
     await driver.wait(until.elementIsVisible(listbox), 2000);
     assert.strictEqual(await combobox.getAttribute('aria-expanded'), 'true');

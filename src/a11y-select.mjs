@@ -533,7 +533,7 @@ export const a11ySelect = (native_select, unique_id) => {
       search_buffer += e.key;
 
       const matching_options = options
-        .filter(option => option.textContent.toLowerCase().indexOf(search_buffer) !== -1);
+        .filter(option => option.textContent.toLowerCase().indexOf(search_buffer.toLowerCase()) !== -1);
 
       if (matching_options.length) {
         active_descendant = matching_options[0];
