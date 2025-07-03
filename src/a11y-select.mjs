@@ -320,7 +320,8 @@ export const a11ySelect = (native_select, unique_id) => {
 
     if (isAbove) {
       listbox.scrollTo(0, offsetTop);
-    } else if (isBelow) {
+    }
+    else if (isBelow) {
       listbox.scrollTo(0, offsetTop - parentOffsetHeight + offsetHeight);
     }
   }
@@ -417,13 +418,13 @@ export const a11ySelect = (native_select, unique_id) => {
       selected_option = active_descendant;
       closeCombobox(true);
     }
-      // The escape key should close the combobox and revert the user selection
+    // The escape key should close the combobox and revert the user selection
     // to the state it was the last time they opened the combobox.
     else if (e.key === 'Escape') {
       closeCombobox(false);
     }
-      // The space key should toggle the combobox state.  If the combobox is
-      // currently closed: it should be opened.  If the combobox is currently
+    // The space key should toggle the combobox state.  If the combobox is
+    // currently closed: it should be opened.  If the combobox is currently
     // open: it should be closed and the user selection should be persisted.
     else if (e.key === 'Enter' || e.key === ' ') {
       if (combobox.getAttribute('aria-expanded') === 'true') {
@@ -433,7 +434,7 @@ export const a11ySelect = (native_select, unique_id) => {
         openCombobox();
       }
     }
-      // The home key should move the selection to the first option if the
+    // The home key should move the selection to the first option if the
     // combobox is currently open.
     else if (e.key === 'Home') {
       if (combobox.getAttribute('aria-expanded') === 'true') {
@@ -443,7 +444,7 @@ export const a11ySelect = (native_select, unique_id) => {
         maintainScrollVisibility();
       }
     }
-      // The page up key should move the selection up by 10 options or to the
+    // The page up key should move the selection up by 10 options or to the
     // first option, whichever comes first if the combobox is currently open.
     else if (e.key === 'PageUp') {
       if (combobox.getAttribute('aria-expanded') === 'true') {
@@ -453,11 +454,11 @@ export const a11ySelect = (native_select, unique_id) => {
         maintainScrollVisibility(active_descendant, listbox);
       }
     }
-      // The arrow up key has multiple functions.  If the combobox is currently
-      // closed, the combobox is opened.  Furthermore, unless the user was
-      // holding the alt key, the current selection will be moved up one option
-      // unless the user was already on the first option in the list. If the
-      // combobox is currently open, the current selection is moved up one option
+    // The arrow up key has multiple functions.  If the combobox is currently
+    // closed, the combobox is opened.  Furthermore, unless the user was
+    // holding the alt key, the current selection will be moved up one option
+    // unless the user was already on the first option in the list. If the
+    // combobox is currently open, the current selection is moved up one option
     // unless the user was already on the first option in the list.
     else if (e.key === 'ArrowUp') {
       e.preventDefault();
@@ -473,11 +474,11 @@ export const a11ySelect = (native_select, unique_id) => {
       }
       maintainScrollVisibility(active_descendant, listbox);
     }
-      // The arrow down key has multiple functions.  If the combobox is currently
-      // closed, the combobox is opened.  Furthermore, unless the user was
-      // holding the alt key, the current selection will be moved down one option
-      // unless the user was already on the last option in the list. If the
-      // combobox is currently open, the current selection is moved down one
+    // The arrow down key has multiple functions.  If the combobox is currently
+    // closed, the combobox is opened.  Furthermore, unless the user was
+    // holding the alt key, the current selection will be moved down one option
+    // unless the user was already on the last option in the list. If the
+    // combobox is currently open, the current selection is moved down one
     // option unless the user was already on the last option in the list.
     else if (e.key === 'ArrowDown') {
       e.preventDefault();
@@ -495,7 +496,7 @@ export const a11ySelect = (native_select, unique_id) => {
 
       maintainScrollVisibility(active_descendant, listbox);
     }
-      // The page down key should move the selection up by 10 options or to the
+    // The page down key should move the selection up by 10 options or to the
     // last option, whichever comes first if the combobox is currently open.
     else if (e.key === 'PageDown') {
       if (combobox.getAttribute('aria-expanded') === 'true') {
@@ -505,7 +506,7 @@ export const a11ySelect = (native_select, unique_id) => {
         maintainScrollVisibility(active_descendant, listbox);
       }
     }
-      // The home key should move the selection to the last option if the
+    // The home key should move the selection to the last option if the
     // combobox is currently open.
     else if (e.key === 'End') {
       if (combobox.getAttribute('aria-expanded') === 'true') {

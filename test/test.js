@@ -106,7 +106,7 @@ describe('Simple Tests', () => {
     assert.strictEqual(
       await select.getCssValue('display'),
       'none',
-      'The native select element is hidden from the accessibility tree.'
+      'The native select element is hidden from the accessibility tree.',
     );
 
     const native_options = await driver.findElements(By.tagName('option'));
@@ -117,13 +117,13 @@ describe('Simple Tests', () => {
       assert.strictEqual(
         await option.getAttribute('textContent'),
         await replacement_option.getAttribute('textContent'),
-        'The replacement option has an appropriate label.'
+        'The replacement option has an appropriate label.',
       );
 
       assert.strictEqual(
         await option.getAttribute('selected') ? 'true' : 'false',
         await replacement_option.getAttribute('aria-selected'),
-        'The replacement option has an appropriate selection state.'
+        'The replacement option has an appropriate selection state.',
       );
     }
   });
@@ -531,7 +531,7 @@ describe('Optgroup Tests', () => {
     assert.strictEqual(
       await select.getCssValue('display'),
       'none',
-      'The native select element is hidden from the accessibility tree.'
+      'The native select element is hidden from the accessibility tree.',
     );
 
     const native_optgroups = await driver.findElements(By.tagName('optgroup'));
@@ -552,13 +552,13 @@ describe('Optgroup Tests', () => {
         assert.strictEqual(
           await option.getAttribute('textContent'),
           await replacement_option.getAttribute('textContent'),
-          'The replacement option has an appropriate label.'
+          'The replacement option has an appropriate label.',
         );
 
         assert.strictEqual(
           await option.getAttribute('selected') ? 'true' : 'false',
           await replacement_option.getAttribute('aria-selected'),
-          'The replacement option has an appropriate selection state.'
+          'The replacement option has an appropriate selection state.',
         );
       }
 
@@ -657,7 +657,6 @@ describe('Label association tests', () => {
   it('Correctly assigns the aria-labelledby attribute when the native label is associated via the "for" attribute with a pre-existing ID', async () => {
     await driver.get(`http://bs-local.com/test/label-association-for.html`);
     const combobox = await driver.wait(until.elementLocated(By.css('.a11y-select__combobox')));
-    const label = await driver.wait(until.elementLocated(By.css('label')));
 
     assert.strictEqual(await combobox.getAttribute('aria-labelledby'), 'pre-existing-id');
   });
@@ -665,7 +664,6 @@ describe('Label association tests', () => {
   it('Correctly assigns the aria-labelledby attribute when the native label is associated via the "for" attribute without a pre-existing ID', async () => {
     await driver.get(`http://bs-local.com/test/label-association-for-without-id.html`);
     const combobox = await driver.wait(until.elementLocated(By.css('.a11y-select__combobox')));
-    const label = await driver.wait(until.elementLocated(By.css('label')));
 
     assert.strictEqual(await combobox.getAttribute('aria-labelledby'), 'a11y-select-demo--combobox-label');
   });
