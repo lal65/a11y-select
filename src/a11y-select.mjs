@@ -59,7 +59,7 @@ export const a11ySelect = (native_select, unique_id) => {
   // inside.
   // @see https://bugs.webkit.org/show_bug.cgi?id=293506
   if (is_probably_macos && native_select.querySelector('optgroup')) {
-    console.warn('Option groups are not well supported on MacOS / Voiceover. Instead of using option groups, consider a different user experience.')
+    console.warn('Option groups are not well supported on MacOS / Voiceover. Instead of using option groups, consider a different user experience.');
   }
 
   // The disabled options may result in poor accessibility.
@@ -540,7 +540,7 @@ export const a11ySelect = (native_select, unique_id) => {
         maintainScrollVisibility();
       }
 
-      revalidateState()
+      revalidateState();
     }
 
   });

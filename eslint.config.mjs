@@ -18,6 +18,7 @@ export default defineConfig([
       'brace-style': ['error', 'stroustrup'],
       'comma-dangle': ['error', 'always-multiline'],
       'indent': ['error', 2],
+      'semi': ['error', 'always'],
     },
     languageOptions: {
       globals: {

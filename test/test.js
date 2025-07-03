@@ -9,7 +9,7 @@ describe('Preflight checks', () => {
       'goog:loggingPrefs': { browser: 'ALL' },
     }).forBrowser(Browser.CHROME).build();
     await driver.manage().setTimeouts({ implicit: 5000 });
-  })
+  });
 
   after(async () => {
     await driver.quit();
@@ -90,7 +90,7 @@ describe('Simple Tests', () => {
     driver = await new Builder().withCapabilities({
       'goog:loggingPrefs': { browser: 'ALL' },
     }).forBrowser(Browser.CHROME).build();
-  })
+  });
 
   after(async () => {
     await driver.quit();
@@ -467,7 +467,7 @@ describe('Search tests', () => {
     driver = await new Builder().withCapabilities({
       'goog:loggingPrefs': { browser: 'ALL' },
     }).forBrowser(Browser.CHROME).build();
-  })
+  });
 
   after(async () => {
     await driver.quit();
@@ -514,7 +514,7 @@ describe('Optgroup Tests', () => {
     driver = await new Builder().withCapabilities({
       'goog:loggingPrefs': { browser: 'ALL' },
     }).forBrowser(Browser.CHROME).build();
-  })
+  });
 
   after(async () => {
     await driver.quit();
@@ -573,7 +573,7 @@ describe('Dependent options', () => {
     driver = await new Builder().withCapabilities({
       'goog:loggingPrefs': { browser: 'ALL' },
     }).forBrowser(Browser.CHROME).build();
-  })
+  });
 
   after(async () => {
     await driver.quit();
@@ -647,7 +647,7 @@ describe('Label association tests', () => {
     driver = await new Builder().withCapabilities({
       'goog:loggingPrefs': { browser: 'ALL' },
     }).forBrowser(Browser.CHROME).build();
-  })
+  });
 
   after(async () => {
     await driver.quit();
