@@ -57,12 +57,11 @@
 }
 
 .a11y-select__group > .a11y-select__option {
-  margin-left: calc(var(--a11y-select-group-indent));
+  margin-left: var(--a11y-select-group-indent);
 }
 
 .a11y-select__option {
   cursor: pointer;
-  position: relative;
 
   background: var(--a11y-select-option-background);
   color: var(--a11y-select-option-foreground);
